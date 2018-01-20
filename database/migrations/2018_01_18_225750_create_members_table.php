@@ -17,7 +17,7 @@ class CreateMembersTable extends Migration
             $table->increments('id');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('avatar');
+            $table->string('avatar')->nullable();
             $table->boolean('is_active')->default(1);
             $table->decimal('amount');
             $table->integer('shares');

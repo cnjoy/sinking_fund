@@ -23,3 +23,13 @@ Route::get('/members', function () {
     return view('pages/members');
 });
 
+Route::get('/datatables', 'DatatablesController@getIndex');
+Route::get('/datatables/members', 'DatatablesController@membersData');
+Route::get('/datatables/test', 'DatatablesController@test');
+
+
+// Route::get('datatables', 'DatatablesController', [
+//     'anyData'  => 'datatables.data',
+//     'getIndex' => 'datatables',
+// ]);
+
