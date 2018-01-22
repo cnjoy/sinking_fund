@@ -17,6 +17,7 @@ class CreatePaymentDatesTable extends Migration
             $table->increments('id');
             $table->string('str_month');
             $table->integer('int_day');
+            $table->string('month_day');
             // $table->timestamps();
         });
     }

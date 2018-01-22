@@ -19,8 +19,9 @@ class CreateLoansTable extends Migration
             $table->foreign('lender_id')->references('id')->on('lenders');
             $table->integer('member_id')->unsigned();
             $table->foreign('member_id')->references('id')->on('members');
-            $table->decimal('total_amount',5,2)->default(0.00);
+            $table->decimal('total_amount',10,2)->default(0.00);
             $table->integer('terms_to_pay');
+            $table->decimal('amount_per_term',10,2)->default(0.00);
             $table->boolean('is_paid')->default(0);
             $table->timestamps();
         });

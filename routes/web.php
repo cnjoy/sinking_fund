@@ -23,9 +23,15 @@ Route::get('/members', function () {
     return view('pages/members');
 });
 
+Route::get('/loans', function () {
+    return view('pages/loans');
+});
+
 Route::get('/datatables', 'DatatablesController@getIndex');
 Route::get('/datatables/members', 'DatatablesController@membersData');
+Route::get('/datatables/loans', 'DatatablesController@membersData');
 Route::get('/datatables/test', 'DatatablesController@test');
+Route::get('/datatables/loans', 'DatatablesController@lendersData');
 
 
 // Route::get('datatables', 'DatatablesController', [

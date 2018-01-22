@@ -7,12 +7,26 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
     /**
-     * Get the payments record associated with the members.
+     * Get the payment dates record associated with the members.
      */
-    public function payments()
+    public function payment_dates()
     {
-         return $this->morphTo();
+         return $this->belongsToMany('App\PaymentDate', 'member_payment_dates', 'member_id', 'payment_date_id')
+                    ->withPivot('amount')
+                    ->withTimestamps();
     }
+
+    public function query_payments(Request $request) 
+    {
+
+        $storeId = $request->get('storeId');
+
+        $customers = Customer::whereHas('stores', function($query) use($storeId) {
+            $query->where('stores.id', $storeId);
+        })->get();
+
+    }
+
 
     /**
      * Get the contributions record associated with the members.

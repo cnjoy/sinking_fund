@@ -1,14 +1,16 @@
 @extends('layouts.default')
 @section('subheader_title')
-Members
+Loans
 @stop
 @section('content')
 <div class="table-container">
     <table class="table table-bordered" id="members-table">
         <thead>
             <tr>
-                <th>Member (head)</th>
-                <th>Total</th>
+                <th>Lenders (terms) </th>
+                <th>c/o</th>
+                <th>Amount</th>
+                <th>Paid</th>
                 <th>01/16</th>
                 <th>02/01</th>
                 <th>02/16</th>
@@ -47,10 +49,12 @@ $(function() {
         processing: true,
         serverSide: true,
         pageLength: 50, // default records per page
-        ajax: '/datatables/members',
+        ajax: '/datatables/loans',
         columns: [
             { data: 'fullname', name: 'fullname'},
-            { data: 'amount', name: 'amount' },
+            { data: 'member', name: 'member' },
+            { data: 'total_amount', name: 'total_amount' },
+            { data: 'amount_paid', name: 'amount_paid' },
             { data: 'January 16', name: 'January 16', class: 'text-center'},
             { data: 'February 1', name: 'February 1', class: 'text-center'},
             { data: 'February 16', name: 'February 16', class: 'text-center'},
