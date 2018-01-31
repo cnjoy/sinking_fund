@@ -8,7 +8,7 @@ Calculator
 	    <div class="box-header with-border">
 	      <h3 class="box-title">Calculator</h3>
 	    </div>
-		<div class="box-body">
+		<div class="box-body" id="app">
 			{{  Form::open(array('action'=>'LoansController@add', 'method' => 'post')) }}
 			  	<div class="row">
 		    		
