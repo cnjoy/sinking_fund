@@ -29,6 +29,11 @@ Route::get('/loans', function () {
 Route::get('/apply-loan', function () {
     return view('pages/apply_loan');
 });
+Route::get('/calculator', function () {
+    return view('pages/calculator');
+});
+
+Route::post('/submit-loan', ['as' => 'form_url', 'uses' => 'LoansController@add']);
 
 Route::get('/datatables', 'DatatablesController@getIndex');
 Route::get('/datatables/members', 'DatatablesController@membersData');
@@ -37,6 +42,7 @@ Route::get('/datatables/test', 'DatatablesController@test');
 Route::get('/datatables/loans', 'DatatablesController@lendersData');
 
 Route::get('/get_members', 'LoansController@getMembers');
+// Route::get('/submit-loan', 'LoansController@add');
 // Route::get('datatables', 'DatatablesController', [
 //     'anyData'  => 'datatables.data',
 //     'getIndex' => 'datatables',
