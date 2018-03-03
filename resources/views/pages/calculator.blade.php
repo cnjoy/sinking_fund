@@ -62,7 +62,43 @@ Calculator
 		</div>
 	</div>
 </div>
-
+<div class="col-md-6">
+	<div class="box box-info ">
+	    <div class="box-header with-border">
+	      <h3 class="box-title">Computation</h3>
+	    </div>
+		<div class="box-body" id="app">
+			<!-- Payment per payday: Php <span id="calc_result">0.00</span> -->
+			<table class="table table-bordered ">
+				<tr>
+					<td class="tg-yw4l">Loan Amount</td>
+					<td class="tg-yw4l">Php <span id="loan_amount">0.00</span></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l">Months to Pay</td>
+					<td class="tg-yw4l"><span id="months_to_pay">0</span></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l">Interest (5% per month)</td>
+					<td class="tg-yw4l">Php <span id="interest">0.00</span></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l">Total Amount</td>
+					<td class="tg-yw4l">Php <span id="total_amount">0.00</span></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l">Amount per Payday</td>
+					<td class="tg-yw4l"><strong  class="text-red">Php <span id="amount_per_payday">0.00</span></strong></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l"></td>
+					<td class="tg-yw4l"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+		
 @stop
 
 @push('scripts')
@@ -82,7 +118,92 @@ $(function(){
 		
 	});
 
+	
+
+
+	$('#amount').on('keyup', function(){
+		var val 	= parseFloat($(this).val());
+		var terms 	= $('#terms').val();
+
+		var comp = new Computation(val, terms);
+		comp.setComputedValues();
+	})
+	$('#terms').on('change', function(){
+		var val 	= parseFloat($('#amount').val());
+		var terms 	= $(this).val();
+		
+		var comp = new Computation(val, terms);
+		comp.setComputedValues();
+	})
+	
+
 });
+
+function Computation(amount, months){
+	this.loan_amount = amount;
+	this.months = months;
+	this.percentage = 0.5;
+	this.interest = 0;
+	this.total_amount = 0;
+	this.amount_per_payday = 0;
+    
+	this.spans ={
+		'loan_amount' : $('#loan_amount'),
+		'months_to_pay' : $('#months_to_pay'),
+		'interest' : $('#interest'),
+		'total_amount' : $('#total_amount'),
+		'amount_per_payday' : $('#amount_per_payday'),
+	}
+
+	this.calculate = function(){
+		var months = this.months;
+		var amount = this.loan_amount;
+		var interest = (amount * this.percentage) * months;
+		var total_amount = (amount + interest);
+		var amount_per_payday = total_amount/(months * 2);
+		this.interest = interest;
+		this.total_amount = total_amount.toFixed(2);
+		this.amount_per_payday = amount_per_payday.toFixed(2);
+	}
+
+	this.setComputedValues = function(){
+		this.calculate();
+		this.spans.loan_amount.text(this.loan_amount).digits();
+		this.spans.months_to_pay.text(this.months);
+		this.spans.interest.text(this.interest).digits();
+		this.spans.total_amount.text(this.total_amount).digits();
+		this.spans.amount_per_payday.text(this.amount_per_payday).digits();
+	}
+
+}
+
+
+
+$.fn.digits = function(){ 
+    return this.each(function(){ 
+        $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
+    })
+}
+
+function calculate(amount, months){
+	var payment = {
+		'interest': 0,
+		'loan_amount': amount,
+		'total_amount': '0.00',
+		'amount_per_payday': 0,
+	}
+	var interest = (amount * 0.05) * months;
+	var total_amount = (amount + interest);
+	var amount_per_payday = total_amount/(months * 2);
+
+	payment.interest = interest;
+	payment.total_amount = total_amount.toFixed(2);
+	payment.amount_per_payday = amount_per_payday.toFixed(2);
+	
+	return payment;
+
+
+}
 
 
 </script>
