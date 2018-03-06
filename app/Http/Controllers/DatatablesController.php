@@ -92,13 +92,12 @@ class DatatablesController extends Controller
      */
     public function lendersData()
     {
-        
-        
         $loans = Loan::leftJoin('lenders', 'lenders.id', '=', 'loans.lender_id')
                         ->leftJoin('members', 'members.id', '=', 'loans.member_id')
                         ->leftJoin('loan_payment_dates', 'loans.id', '=', 'loan_payment_dates.loan_id')
                         ->leftJoin('payment_dates', 'payment_dates.id', '=', 'loan_payment_dates.payment_date_id')
                         ->selectRaw("loans.id, 
+                        is_approved,
                                     CONCAT(lenders.first_name, ' ', lenders.last_name, ' <span class=\"font11\">(',terms_to_pay, ')</span>') AS fullname,
                                     CONCAT(members.first_name, ' ', members.last_name) AS member,
                                     loans.total_amount,
@@ -126,10 +125,14 @@ class DatatablesController extends Controller
                                     MAX(CASE WHEN month_day='November 1' THEN loan_payment_dates.amount END) AS 'November 1',
                                     MAX(CASE WHEN month_day='November 16' THEN loan_payment_dates.amount END) AS 'November 16',
                                     MAX(CASE WHEN month_day='December 1' THEN loan_payment_dates.amount END) AS 'December 1'")
+                        // ->where("is_approved", 1)
                         ->groupBy("loans.id")
                         ->get()->toArray();
-
-        $raw_columns = array_keys(current($loans));
+        $raw_columns = [];
+        if( !empty($loans) ) {
+            $raw_columns = array_keys(current($loans));
+        }
+        
 
         return Datatables::of($loans)->rawColumns($raw_columns)->make(true);
     }

@@ -54,7 +54,7 @@ Calculator
 		    		</div>
 		    		<div class="col-md-6">
 		    			<div class="form-group">
-		    				<button class="form-control btn-success">Submit</button>
+		    				<!-- <button class="form-control btn-success">Submit</button> -->
 			    		</div>
 		    		</div>
 			  	</div>
@@ -142,7 +142,7 @@ $(function(){
 function Computation(amount, months){
 	this.loan_amount = amount;
 	this.months = months;
-	this.percentage = 0.5;
+	this.percentage = 0.05;
 	this.interest = 0;
 	this.total_amount = 0;
 	this.amount_per_payday = 0;

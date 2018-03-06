@@ -23,13 +23,13 @@ class LoansController extends Controller
     	return Response::json($result);
     }
     public function add(Request $request){
-        print_r($request->all());
+        // print_r($request->all());
         $lender = new Lender();
         $lender->first_name = $request->first_name;
         $lender->last_name = $request->last_name;
         $lender->is_member = 1;
         $lender->save();
-        echo $lender->id;
+        // echo $lender->id;
 
         $loan = new Loan();
         $loan->lender_id = $lender->id;
