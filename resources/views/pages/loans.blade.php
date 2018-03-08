@@ -3,42 +3,80 @@
 Loans
 @stop
 @section('content')
-<div class="table-container">
-    <table class="table table-bordered" id="members-table">
-        <thead>
-            <tr>
-                <th>Lenders (terms) </th>
-                <th>c/o</th>
-                <th>Amount</th>
-                <th>Paid</th>
-                <th>01/16</th>
-                <th>02/01</th>
-                <th>02/16</th>
-                <th>03/01</th>
-                <th>03/16</th>
-                <th>04/01</th>
-                <th>04/16</th>
-                <th>05/01</th>
-                <th>05/16</th>
-                <th>06/01</th>
-                <th>06/16</th>
-                <th>07/01</th>
-                <th>07/16</th>
-                <th>08/01</th>
-                <th>08/16</th>
-                <th>09/01</th>
-                <th>09/16</th>
-                <th>10/01</th>
-                <th>10/16</th>
-                <th>11/01</th>
-                <th>11/16</th>
-                <th>12/01</th>
+<div class="col-md-12">
+	<div class="box box-info ">
+	    <div class="box-header with-border">
+	      <h3 class="box-title">Applicants</h3>
+	    </div>
+		<div class="box-body" id="">
+        <div class="table-container">
+                <table class="table table-bordered" id="loan-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Lender (Codename)</th>
+                            <th>c/o</th>
+                            <th>Loan Amount</th>
+                            <th>Terms</th>
+                            <!-- <th>Loan Date</th> -->
+                            <th>Amortization</th>
+                            <th>Amount Paid</th>
+                            <th>Balance</th>
+                            <th>Start Date</th>
+                            <th>Last Paid</th>
+                            <th>End Date</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+	<div class="box box-info ">
+	    <div class="box-header with-border">
+	      <h3 class="box-title">Loans</h3>
+	    </div>
+        <div class="box-body" id="">
+            <div class="table-container">
+                <table class="table table-bordered" id="members-table">
+                    <thead>
+                        <tr>
+                            <th>Lenders (terms) </th>
+                            <th>c/o</th>
+                            <th>Amount</th>
+                            <th>Paid</th>
+                            <th>01/16</th>
+                            <th>02/01</th>
+                            <th>02/16</th>
+                            <th>03/01</th>
+                            <th>03/16</th>
+                            <th>04/01</th>
+                            <th>04/16</th>
+                            <th>05/01</th>
+                            <th>05/16</th>
+                            <th>06/01</th>
+                            <th>06/16</th>
+                            <th>07/01</th>
+                            <th>07/16</th>
+                            <th>08/01</th>
+                            <th>08/16</th>
+                            <th>09/01</th>
+                            <th>09/16</th>
+                            <th>10/01</th>
+                            <th>10/16</th>
+                            <th>11/01</th>
+                            <th>11/16</th>
+                            <th>12/01</th>
 
 
-                
-            </tr>
-        </thead>
-    </table>
+                            
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+   </div>
 </div>
 @stop
 
@@ -49,7 +87,7 @@ $(function() {
         processing: true,
         serverSide: true,
         pageLength: 50, // default records per page
-        ajax: '/datatables/loans',
+        ajax: '/datatables/lenders',
         columns: [
             { data: 'fullname', name: 'fullname'},
             { data: 'member', name: 'member' },
@@ -81,6 +119,107 @@ $(function() {
            
         ]
     });
+
+    var dt = $('#loan-table').DataTable({
+        processing: true,
+        serverSide: true,
+        pageLength: 50, // default records per page
+        ajax: '/datatables/loans',
+        columns: [
+            {
+                "class":          "details-control",
+                "orderable":      false,
+                "data":           null,
+                "defaultContent": ""
+            },
+            { data: 'lender', name: 'lender'},
+            { data: 'member', name: 'member' },
+            { data: 'total_amount', name: 'total_amount' },
+            { data: 'months_to_pay', name: 'months_to_pay' },
+            { data: 'amount_per_term', name: 'amount_per_term' },
+            { data: 'paid', name: 'paid' },
+            { data: 'balance', name: 'balance' },
+            { data: 'created_at', name: 'created_at' },
+            { data: 'updated_at', name: 'updated_at' },
+            { data: 'end_date', name: 'end_date' },
+           
+        ]
+    });
+
+    $('#loan-table tbody').on( 'click', 'tr td.details-control', function () {
+        var tr = $(this).closest('tr');
+        var row = dt.row( tr );
+        var idx = $.inArray( tr.attr('id'), detailRows );
+ 
+        if ( row.child.isShown() ) {
+            tr.removeClass( 'details' );
+            row.child.hide();
+ 
+            // Remove from the 'open' array
+            detailRows.splice( idx, 1 );
+        }
+        else {
+            tr.addClass( 'details' );
+            row.child( format3( row.data() ) ).show();
+ 
+            // Add to the 'open' array
+            if ( idx === -1 ) {
+                detailRows.push( tr.attr('id') );
+            }
+        }
+    } );
+
+    // Array to track the ids of the details displayed rows
+    var detailRows = [];
+    // On each draw, loop over the `detailRows` array and show any child rows
+    dt.on( 'draw', function () {
+        $.each( detailRows, function ( i, id ) {
+            $('#'+id+' td.details-control').trigger( 'click' );
+        } );
+    } );
 });
+function format ( d ) {
+    return 'Full name: '+d.first_name+' '+d.last_name+'<br>'+
+        'Salary: '+d.salary+'<br>'+
+        'The child row can contain any data you wish, including links, images, inner tables etc.';
+}
+function format3 ( d ) {
+ 
+    return `<div class="table-container">
+                <table class="table table-bordered" id="">
+                    <thead>
+                        <tr>
+                            <th>Member (head)</th>
+                            <th>Total</th>
+                            <th>01/16</th>
+                            <th>02/01</th>
+                            <th>02/16</th>
+                            <th>03/01</th>
+                            <th>03/16</th>
+                            <th>04/01</th>
+                            <th>04/16</th>
+                            <th>05/01</th>
+                            <th>05/16</th>
+                            <th>06/01</th>
+                            <th>06/16</th>
+                            <th>07/01</th>
+                            <th>07/16</th>
+                            <th>08/01</th>
+                            <th>08/16</th>
+                            <th>09/01</th>
+                            <th>09/16</th>
+                            <th>10/01</th>
+                            <th>10/16</th>
+                            <th>11/01</th>
+                            <th>11/16</th>
+                            <th>12/01</th>
+
+
+                            
+                        </tr>
+                    </thead>
+                </table>
+            </div>`;
+}
 </script>
 @endpush

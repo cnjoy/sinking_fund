@@ -17,7 +17,7 @@ Calculator
 				    		<!-- <label>Amount</label>
 				    		<input type="text" class="form-control"/>  -->
 				    		{{ Form::label('amount', 'Amount') }}
-				    		{{ Form::text('amount', '0.0', array('class' => 'form-control')) }}
+				    		{{ Form::text('amount', '0.0', array('class' => 'form-control numeric-only')) }}
 			    		</div>
 		    		</div>
 		    		<div class="col-md-6">
@@ -103,11 +103,12 @@ Calculator
 
 @push('scripts')
 <script src="js/select2/dist/js/select2.full.min.js"></script>
+<script src="js/plugins/jquery.numeric-only.js"></script>
 <script>
 $(function(){
 	//Initialize Select2 Elements
    	$('.select2').select2();
-
+	
     $('.select1').select2({
 		placeholder: 'Select guaranter',
 		dataType: 'json',
@@ -118,7 +119,7 @@ $(function(){
 		
 	});
 
-	
+	$('.numeric-only').numericOnly();
 
 
 	$('#amount').on('keyup', function(){
@@ -140,12 +141,13 @@ $(function(){
 });
 
 function Computation(amount, months){
-	this.loan_amount = amount;
+	this.loan_amount = isNaN(amount) ? 0 : amount;
 	this.months = months;
 	this.percentage = 0.05;
 	this.interest = 0;
 	this.total_amount = 0;
 	this.amount_per_payday = 0;
+	
     
 	this.spans ={
 		'loan_amount' : $('#loan_amount'),
@@ -161,7 +163,7 @@ function Computation(amount, months){
 		var interest = (amount * this.percentage) * months;
 		var total_amount = (amount + interest);
 		var amount_per_payday = total_amount/(months * 2);
-		this.interest = interest;
+		this.interest = interest.toFixed(2);
 		this.total_amount = total_amount.toFixed(2);
 		this.amount_per_payday = amount_per_payday.toFixed(2);
 	}
@@ -184,27 +186,6 @@ $.fn.digits = function(){
         $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
     })
 }
-
-function calculate(amount, months){
-	var payment = {
-		'interest': 0,
-		'loan_amount': amount,
-		'total_amount': '0.00',
-		'amount_per_payday': 0,
-	}
-	var interest = (amount * 0.05) * months;
-	var total_amount = (amount + interest);
-	var amount_per_payday = total_amount/(months * 2);
-
-	payment.interest = interest;
-	payment.total_amount = total_amount.toFixed(2);
-	payment.amount_per_payday = amount_per_payday.toFixed(2);
-	
-	return payment;
-
-
-}
-
 
 </script>
 @endpush

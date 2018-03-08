@@ -68,9 +68,10 @@ class DatatablesController extends Controller
                 $final[$member_id]['amount'] = isset($final[$member_id]['amount']) ? $final[$member_id]['amount'] + $member['amount'] : $member['amount'] ;
                 $final[$member_id][$month] = '<i class="fa fa-check text-success text-center"></i>';
                 // $final[$member_id][$month] = $member['amount'];
+                
             }else{
                 $final[$member_id]['amount'] = isset($final[$member_id]['amount']) ? $final[$member_id]['amount'] + $member['amount'] : 0 ;
-                $final[$member_id][$month] = '';
+                $final[$member_id][$month] = '<input type="checkbox" value="" checked>';
             }
             
             // get the column for once
@@ -98,7 +99,7 @@ class DatatablesController extends Controller
                         ->leftJoin('payment_dates', 'payment_dates.id', '=', 'loan_payment_dates.payment_date_id')
                         ->selectRaw("loans.id, 
                         is_approved,
-                                    CONCAT(lenders.first_name, ' ', lenders.last_name, ' <span class=\"font11\">(',terms_to_pay, ')</span>') AS fullname,
+                                    CONCAT(lenders.first_name, ' ', lenders.last_name, ' <span class=\"font11\">(',months_to_pay, ')</span>') AS fullname,
                                     CONCAT(members.first_name, ' ', members.last_name) AS member,
                                     loans.total_amount,
                                     SUM(loan_payment_dates.amount) AS amount_paid, 
@@ -137,6 +138,39 @@ class DatatablesController extends Controller
         return Datatables::of($loans)->rawColumns($raw_columns)->make(true);
     }
 
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function loansData()
+    {
+        $loans = Loan::leftJoin('lenders', 'lenders.id', '=', 'loans.lender_id')
+                        ->leftJoin('members', 'members.id', '=', 'loans.member_id')
+                        ->leftJoin('loan_payment_dates', 'loans.id', '=', 'loan_payment_dates.loan_id')
+                        ->leftJoin('payment_dates', 'payment_dates.id', '=', 'loan_payment_dates.payment_date_id')
+                        ->selectRaw("CONCAT(lenders.first_name, ' ' , lenders.last_name, '(', codename, ')') as lender,
+                                    codename,
+                                    CONCAT(members.first_name, ' ' , members.last_name) AS member,
+                                    total_amount, 
+                                    months_to_pay, 
+                                    loans.created_at, 
+                                    loans.updated_at, 
+                                    amount_per_term,
+                                    SUM(loan_payment_dates.amount) AS paid,
+                                    total_amount - SUM(loan_payment_dates.amount) AS balance, 
+                                    '' as end_date")
+                        // ->where("is_approved", 1)
+                        ->groupBy("loans.id")
+                        ->get()->toArray();
+        $raw_columns = [];
+        if( !empty($loans) ) {
+            $raw_columns = array_keys(current($loans));
+        }
+        
+
+        return Datatables::of($loans)->rawColumns($raw_columns)->make(true);
+    }
 
     public function memberstest(){
         echo '<pre>';

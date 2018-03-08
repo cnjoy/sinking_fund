@@ -20,3 +20,5 @@
 <link rel="stylesheet" href="css/style.css">
 
 <script src="js/jquery/dist/jquery.min.js"></script>
+<script src="js/plugins/jquery.numeric-only.js"></script>
+
