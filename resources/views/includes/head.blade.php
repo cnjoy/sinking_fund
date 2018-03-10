@@ -1,6 +1,7 @@
 <meta charset="utf-8">
 <meta name="description" content="">
 <meta name="author" content="Joy">
+<meta name="csrfToken" content="{{ csrf_token() }}">
 
 <title>Joy Neri</title>
 <!-- Tell the browser to be responsive to screen width -->
@@ -20,5 +21,5 @@
 <link rel="stylesheet" href="css/style.css">
 
 <script src="js/jquery/dist/jquery.min.js"></script>
-<script src="js/plugins/jquery.numeric-only.js"></script>
+<!-- <script src="js/plugins/jquery.numeric-only.js"></script> -->
 

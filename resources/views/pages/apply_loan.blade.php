@@ -98,6 +98,42 @@ Apply Loan
 		</div>
 	</div>
 </div>
+<div class="col-md-6">
+	<div class="box box-info ">
+	    <div class="box-header with-border">
+	      <h3 class="box-title">Computation</h3>
+	    </div>
+		<div class="box-body" id="app">
+			<!-- Payment per payday: Php <span id="calc_result">0.00</span> -->
+			<table class="table table-bordered ">
+				<tr>
+					<td class="tg-yw4l">Loan Amount</td>
+					<td class="tg-yw4l">Php <span id="loan_amount">0.00</span></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l">Months to Pay</td>
+					<td class="tg-yw4l"><span id="months_to_pay">0</span></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l">Interest (5% per month)</td>
+					<td class="tg-yw4l">Php <span id="interest">0.00</span></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l">Total Amount</td>
+					<td class="tg-yw4l">Php <span id="total_amount">0.00</span></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l">Amount per Payday</td>
+					<td class="tg-yw4l"><strong  class="text-red">Php <span id="amount_per_payday">0.00</span></strong></td>
+				</tr>
+				<tr>
+					<td class="tg-yw4l"></td>
+					<td class="tg-yw4l"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
 
 @stop
 

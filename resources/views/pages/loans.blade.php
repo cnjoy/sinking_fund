@@ -81,8 +81,16 @@ Loans
 @stop
 
 @push('scripts')
+<link rel="stylesheet" href="js/plugins/bootstrap3-editable/css/bootstrap-editable.css">
+<script src="js/plugins/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+
 <script>
 $(function() {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+        }
+    }); 
     $('#members-table').DataTable({
         processing: true,
         serverSide: true,
@@ -150,6 +158,7 @@ $(function() {
         var tr = $(this).closest('tr');
         var row = dt.row( tr );
         var idx = $.inArray( tr.attr('id'), detailRows );
+        var id = tr.attr('id');
  
         if ( row.child.isShown() ) {
             tr.removeClass( 'details' );
@@ -160,13 +169,16 @@ $(function() {
         }
         else {
             tr.addClass( 'details' );
-            row.child( format3( row.data() ) ).show();
- 
+            row.child( format3( id ) ).show();
+            get_details(tr.attr('id'));
+          
             // Add to the 'open' array
             if ( idx === -1 ) {
                 detailRows.push( tr.attr('id') );
             }
         }
+       
+       
     } );
 
     // Array to track the ids of the details displayed rows
@@ -178,48 +190,40 @@ $(function() {
         } );
     } );
 });
-function format ( d ) {
-    return 'Full name: '+d.first_name+' '+d.last_name+'<br>'+
-        'Salary: '+d.salary+'<br>'+
-        'The child row can contain any data you wish, including links, images, inner tables etc.';
-}
-function format3 ( d ) {
+
+function format3 ( id ) {
  
-    return `<div class="table-container">
-                <table class="table table-bordered" id="">
-                    <thead>
-                        <tr>
-                            <th>Member (head)</th>
-                            <th>Total</th>
-                            <th>01/16</th>
-                            <th>02/01</th>
-                            <th>02/16</th>
-                            <th>03/01</th>
-                            <th>03/16</th>
-                            <th>04/01</th>
-                            <th>04/16</th>
-                            <th>05/01</th>
-                            <th>05/16</th>
-                            <th>06/01</th>
-                            <th>06/16</th>
-                            <th>07/01</th>
-                            <th>07/16</th>
-                            <th>08/01</th>
-                            <th>08/16</th>
-                            <th>09/01</th>
-                            <th>09/16</th>
-                            <th>10/01</th>
-                            <th>10/16</th>
-                            <th>11/01</th>
-                            <th>11/16</th>
-                            <th>12/01</th>
-
-
-                            
-                        </tr>
-                    </thead>
-                </table>
+    return `<div class="table-container col-md-4" id="tableDiv_`+id+`">
             </div>`;
+}
+//turn to inline mode
+$.fn.editable.defaults.mode = 'inline';
+function get_details(row_id){
+    var loan_id = row_id;
+    var loan = row_id.split('_');
+
+    if(loan.length > 1) {
+        loan_id = loan[1];
+    }
+
+    $.ajax({
+            "url": '/single-loan/' + loan_id,
+            "success": function(json) {
+
+                var trHtml = '';
+                $.each(json.data, function(i,data){
+                    trHtml += "<tr><td>" + data.month_day + "</td><td>" + '<a href="#" id="date_'+data.pdid+'" class="editable" data-type="text" data-pk="'+loan_id+'" data-url="/update-payment"  data-title="Enter amount">'+ data.amount +'</a>' +"</td></tr>";
+                });
+                    
+                $("#tableDiv_"+row_id).empty();
+                $("#tableDiv_"+row_id).append(`<table id="displayTable" class="display table table-bordered" cellspacing="0" width="100%">
+                                        <thead><tr><th>Date</th><th>Payment</th></tr></thead>`
+                                        + trHtml + 
+                                        `</table>`);
+                $('.editable').editable();
+            },
+            "dataType": "json"
+        });
 }
 </script>
 @endpush

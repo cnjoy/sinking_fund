@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Lender;
 use App\Loan;
+use App\Loan_Payment_Date;
 use Illuminate\Http\Request;
 use Response;
+use Illuminate\Support\Facades\Input;
 class LoansController extends Controller
 {
     public function getMembers(){
@@ -64,6 +66,17 @@ class LoansController extends Controller
         $loan->months_to_pay = $request->terms;
         $loan->save();
         return redirect('/apply-loan');
+
+    }
+
+    public function updatePaymentRow(){
+        $input = Input::all();
+        $date = explode($input['name'], '_')[1];
+        $amount = $input['value'];
+        $loan_id = $input['pk'];
+        
+        Loan_Payment_Date::find();
+
 
     }
 }

@@ -40,9 +40,12 @@ Route::get('/datatables/members', 'DatatablesController@membersData');
 Route::get('/datatables/test', 'DatatablesController@test');
 Route::get('/datatables/lenders', 'DatatablesController@lendersData');
 Route::get('/datatables/loans', 'DatatablesController@loansData');
+Route::get('/single-loan/{any}', 'DatatablesController@getSingleLoan');
 
 Route::get('/get_members', 'LoansController@getMembers');
 Route::resource('members', 'MembersController');
+
+Route::post('/update-payment', ['uses' => 'LoansController@updatePaymentRow']);
 // Route::get('member/{member_id}', function (App\Member $member) {
 //     return $member->get()->is_dir;
 // });

@@ -8,8 +8,9 @@ use App\PaymentDate;
 use App\Loan;
 use App\MemberPaymentDate;
 use Yajra\Datatables\Datatables;
-use App\Http\Controllers\DB;
-
+use App\Http\Controllers;
+use DB;
+use Response;
 class DatatablesController extends Controller
 {
     /**
@@ -29,7 +30,7 @@ class DatatablesController extends Controller
      */
     public function membersData()
     {
-        $dates = PaymentDate::select(\DB::raw("concat(str_month,' ' , int_day) as date, id"))
+        $dates = PaymentDate::select(DB::raw("concat(str_month,' ' , int_day) as date, id"))
                             ->get()->toArray();
         $dates = array_column($dates, 'date', 'id');
         $month_index= array_flip($dates);
@@ -98,7 +99,7 @@ class DatatablesController extends Controller
                         ->leftJoin('loan_payment_dates', 'loans.id', '=', 'loan_payment_dates.loan_id')
                         ->leftJoin('payment_dates', 'payment_dates.id', '=', 'loan_payment_dates.payment_date_id')
                         ->selectRaw("loans.id, 
-                        is_approved,
+                                    is_approved,
                                     CONCAT(lenders.first_name, ' ', lenders.last_name, ' <span class=\"font11\">(',months_to_pay, ')</span>') AS fullname,
                                     CONCAT(members.first_name, ' ', members.last_name) AS member,
                                     loans.total_amount,
@@ -149,7 +150,9 @@ class DatatablesController extends Controller
                         ->leftJoin('members', 'members.id', '=', 'loans.member_id')
                         ->leftJoin('loan_payment_dates', 'loans.id', '=', 'loan_payment_dates.loan_id')
                         ->leftJoin('payment_dates', 'payment_dates.id', '=', 'loan_payment_dates.payment_date_id')
-                        ->selectRaw("CONCAT(lenders.first_name, ' ' , lenders.last_name, '(', codename, ')') as lender,
+                        ->selectRaw("
+                                    CONCAT('row_', loans.id) as DT_RowId,
+                                    CONCAT(lenders.first_name, ' ' , lenders.last_name, '(', codename, ')') as lender,
                                     codename,
                                     CONCAT(members.first_name, ' ' , members.last_name) AS member,
                                     total_amount, 
@@ -172,66 +175,43 @@ class DatatablesController extends Controller
         return Datatables::of($loans)->rawColumns($raw_columns)->make(true);
     }
 
-    public function memberstest(){
-        echo '<pre>';
-        $dates = PaymentDate::select(\DB::raw("concat(str_month,' ' , int_day) as date, id"))
-                            ->get()->toArray();
-        $dates = array_column($dates, 'date', 'id');
-        print_r($dates);
-
-        $month_index= array_flip($dates);
-        $month_index = array_fill_keys(array_keys($month_index), '');
-        print_r($month_index);
-        
-        $members = Member::leftJoin('member_payment_dates', 'members.id', '=', 'member_payment_dates.member_id')
-                        ->leftJoin('payment_dates', 'payment_dates.id', '=', 'member_payment_dates.payment_date_id')
-                        ->selectRaw("members.id as member_id, 
-                                    first_name, last_name, 
-                                    CONCAT(first_name,' ', last_name, '(',shares, ')') as fullname,
-                                    members.amount, str_month, 
-                                    int_day,
-                                    CONCAT(str_month, ' ' , int_day) as term,
-                                    payment_date_id")
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSingleLoan($loan_id)
+    {
+        $loans = Loan::leftJoin('lenders', 'lenders.id', '=', 'loans.lender_id')
+                        ->leftJoin('payment_dates', function($join){
+                            $join->on('payment_dates.order_id', '>=', 'loans.starts_at');
+                            $join->on('payment_dates.order_id', '<', \DB::raw('loans.starts_at + months_to_pay* 2'));
+                        })
+                        ->leftJoin('loan_payment_dates', function($join){
+                            $join->on('loans.id', '=', 'loan_payment_dates.loan_id');
+                            $join->on('payment_dates.id', '=', 'loan_payment_dates.payment_date_id');
+                        })
+                        ->selectRaw("loans.id,                                
+                                    CONCAT(lenders.first_name, ' ' , lenders.last_name, '(', codename, ')') AS lender,
+                                    order_id,
+                                    starts_at,
+                                    months_to_pay, 
+                                    payment_dates.id AS pdid,
+                                    month_day, 
+                                    amount
+                                    ")
+                        ->where('loans.id', '=', $loan_id)
+                        ->orderBy('loans.id', 'order_id')
                         ->get()->toArray();
-                         print_r($members);
-
-        $final = [];
-        $final = []; $done = 0; $raw_columns = [];
-        foreach($members as $member){
-            $member_id = $member['member_id'];
-            if( !isset($final[$member_id]) )
-            {
-                $final[$member_id] = $month_index;
-                $final[$member_id]['fullname'] = $member['fullname'];
-                $final[$member_id]['amount'] = $member['amount'];
-    
-            }
-            
-            $month = $member['term'];
-            $payment_date_id = isset($month_index[$month]) ? $month_index[$month] : '0';
-         
-            if( isset($month_index[$month]) ){
-                // $month = $dates[$payment_date_id];
-                $final[$member_id][$month] = $member['amount'] ;
-
-                $final[$member_id][$month] = '<i class="fa fa-check"></i>';
-            }else{
-                 // $month = $member['term'];
-                 $final[$member_id][$month] = '';
-            }
-            
-            // get the column for once
-            if( !$done )
-            {
-                $raw_columns = array_keys($member);
-                $raw_columns = array_merge($dates, $raw_columns);
-            }
-
+        $raw_columns = [];
+        if( !empty($loans) ) {
+            $raw_columns = array_keys(current($loans));
         }
-        print_r($raw_columns);
-        // return Datatables::of($final)->make(true);
+        // return Response::json($loans);
+        return Datatables::of($loans)->rawColumns($raw_columns)->make(true);
+        // return Response::json(Datatables::of($loans)->rawColumns($raw_columns)->make(true));
     }
-
+  
 
 
 }
