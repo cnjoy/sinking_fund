@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Lender;
 use App\Loan;
-use App\Loan_Payment_Date;
+use App\LoanPaymentDate;
+use App\PaymentDate;
 use Illuminate\Http\Request;
 use Response;
 use Illuminate\Support\Facades\Input;
@@ -23,6 +24,10 @@ class LoansController extends Controller
 
     	
     	return Response::json($result);
+    }
+    public function applyLoan(){
+        $data['payment_dates'] = PaymentDate::pluck('month_day');
+        return view('pages.apply_loan', $data);
     }
 
     public function getMemberName(){
@@ -70,12 +75,31 @@ class LoansController extends Controller
     }
 
     public function updatePaymentRow(){
+        
         $input = Input::all();
-        $date = explode($input['name'], '_')[1];
+
+        $payment_date_id = explode('_', $input['name'])[1];
         $amount = $input['value'];
         $loan_id = $input['pk'];
+
+        // $results = LoanPaymentDate::where([
+        //             'loan_id', '=', $loan_id,
+        //             'payment_date_id', '=', $payment_date_id
+        //             ])->get();
         
-        Loan_Payment_Date::find();
+
+        $condition =['loan_id' => $loan_id,'payment_date_id'=> $payment_date_id];
+        $data = $condition;
+        $data['amount'] = $amount;
+        print_r($condition);
+
+        LoanPaymentDate::updateOrCreate($condition, $data );
+
+        
+        // $lpd->loan_id = $loan_id;
+        // $lpd->payment_date_id= $payment_date_id;
+        // $lpd->amount=$amount;
+        // $lpd->save();
 
 
     }

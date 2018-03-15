@@ -60,6 +60,7 @@ Apply Loan
 				    		{{ Form::text('phone', '', array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
+
 		    		<div class="col-md-6">
 		    			<div class="form-group">
 				    		<!-- <label>Amount</label>
@@ -86,6 +87,12 @@ Apply Loan
 			                		
 
 			                	), null, array('class' => 'form-control'))}}
+			    		</div>
+		    		</div>
+		    		<div class="col-md-12">
+		    			<div class="form-group">
+			                {{ Form::label('starts_at', 'Starts At *')}}
+			                {{ Form::select('starts_at', $payment_dates, null, array('class' => 'form-control'))}}
 			    		</div>
 		    		</div>
 		    		<div class="col-md-6">

@@ -26,9 +26,7 @@ Route::get('/members', function () {
 Route::get('/loans', function () {
     return view('pages/loans');
 });
-Route::get('/apply-loan', function () {
-    return view('pages/apply_loan');
-});
+Route::get('/apply-loan', 'LoansController@applyLoan');
 Route::get('/calculator', function () {
     return view('pages/calculator');
 });
