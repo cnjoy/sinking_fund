@@ -28,7 +28,7 @@ class DatatablesController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function membersData()
+    public function membersData_backup()
     {
         $dates = PaymentDate::select(DB::raw("concat(str_month,' ' , int_day) as date, id"))
                             ->get()->toArray();
@@ -72,7 +72,7 @@ class DatatablesController extends Controller
                 
             }else{
                 $final[$member_id]['amount'] = isset($final[$member_id]['amount']) ? $final[$member_id]['amount'] + $member['amount'] : 0 ;
-                $final[$member_id][$month] = '<input type="checkbox" value="" checked>';
+                $final[$member_id][$month] = '<input type=\"checkbox\" value="" />checked>';
             }
             
             // get the column for once
@@ -85,6 +85,62 @@ class DatatablesController extends Controller
 
         }
         return Datatables::of($final)->rawColumns($raw_columns)->make(true);
+    }
+
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function membersData()
+    {
+        $done = 0; $raw_columns = [];
+         $members = Member::leftJoin('member_payment_dates', 'members.id', '=', 'member_payment_dates.member_id')
+                        ->leftJoin('payment_dates', 'payment_dates.id', '=', 'member_payment_dates.payment_date_id')
+                        ->selectRaw("members.id as member_id, 
+                                    first_name, last_name, 
+                                    CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname,
+                                    members.amount, str_month, 
+                                    int_day,
+                                    CONCAT(str_month, ' ' , int_day) as term,
+                                    payment_date_id,
+                                    CASE WHEN month_day='01/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '01/16',
+CASE WHEN month_day='02/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '02/01',
+CASE WHEN month_day='02/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '02/16',
+CASE WHEN month_day='03/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '03/01',
+CASE WHEN month_day='03/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '03/16',
+CASE WHEN month_day='04/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '04/01',
+CASE WHEN month_day='04/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '04/16',
+CASE WHEN month_day='05/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '05/01',
+CASE WHEN month_day='05/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '05/16',
+CASE WHEN month_day='06/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '06/01',
+CASE WHEN month_day='06/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '06/16',
+CASE WHEN month_day='07/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '07/01',
+CASE WHEN month_day='07/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '07/16',
+CASE WHEN month_day='08/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '08/01',
+CASE WHEN month_day='08/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '08/16',
+CASE WHEN month_day='09/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '09/01',
+CASE WHEN month_day='09/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '09/16',
+CASE WHEN month_day='10/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '10/01',
+CASE WHEN month_day='10/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '10/16',
+CASE WHEN month_day='11/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '11/01',
+CASE WHEN month_day='11/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '11/16',
+CASE WHEN month_day='12/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '12/01'
+
+
+
+
+
+                                    ")
+                            ->groupBy("members.id")
+                            ->get()->toArray();
+        $raw_columns = [];
+        if( !empty($members) ) {
+            $raw_columns = array_keys(current($members));
+        }
+        
+
+        return Datatables::of($members)->rawColumns($raw_columns)->make(true);
     }
 
     /**
