@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('pages/dashboard');
-});
+
 
 Route::get('/members', function () {
     return view('pages/members');
@@ -31,6 +29,7 @@ Route::get('/calculator', function () {
     return view('pages/calculator');
 });
 
+Route::get('/dashboard', 'MembersController@dashboard');
 Route::get('/apply-loan', 'LoansController@applyLoan');
 
 
