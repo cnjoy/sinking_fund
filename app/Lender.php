@@ -6,6 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lender extends Model
 {
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'company',
+        'address',
+        'is_member',
+    ];
     /**
      * Get the payment dates record associated with the members.
      */

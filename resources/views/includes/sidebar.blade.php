@@ -39,7 +39,7 @@
         </li>
         <li class="header">ACTION</li>
         <li><a href="#"><i class="fa fa-file-pdf-o text-red"></i> <span>Agreement</span></a></li>
-        <li><a href="#"><i class="fa fa-calculator text-yellow"></i> <span>Calculator</span></a></li>
-        <li><a href="#"><i class="fa fa-cart-plus text-aqua"></i> <span>Appy Loan</span></a></li>
+        <li><a href="calculator"><i class="fa fa-calculator text-yellow"></i> <span>Calculator</span></a></li>
+        <li><a href="apply-loan"><i class="fa fa-cart-plus text-aqua"></i> <span>Appy Loan</span></a></li>
 	</ul>
 </section>

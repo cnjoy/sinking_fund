@@ -8,7 +8,7 @@ Members
         <thead>
             <tr>
                 <th>Member (head)</th>
-                <th>Total</th>
+                <th>Amount/mo</th>
                 <th>01/16</th>
                 <th>02/01</th>
                 <th>02/16</th>
@@ -50,32 +50,54 @@ $(function() {
         ajax: '/datatables/members',
         columns: [
             { data: 'fullname', name: 'fullname'},
-            { data: 'amount', name: 'amount' },
-            { data: 'January 16', name: 'January 16', class: 'text-center'},
-            { data: 'February 1', name: 'February 1', class: 'text-center'},
-            { data: 'February 16', name: 'February 16', class: 'text-center'},
-            { data: 'March 1', name: 'March 1', class: 'text-center'},
-            { data: 'March 16', name: 'March 16', class: 'text-center'},
-            { data: 'April 1', name: 'April 1', class: 'text-center'},
-            { data: 'April 16', name: 'April 16', class: 'text-center'},
-            { data: 'May 1', name: 'May 1', class: 'text-center'},
-            { data: 'May 16', name: 'May 16', class: 'text-center'},
-            { data: 'June 1', name: 'June 1', class: 'text-center'},
-            { data: 'June 16', name: 'June 16', class: 'text-center'},
-            { data: 'July 1', name: 'July 1', class: 'text-center'},
-            { data: 'July 16', name: 'July 16', class: 'text-center'},
-            { data: 'August 1', name: 'August 1', class: 'text-center'},
-            { data: 'August 16', name: 'August 16', class: 'text-center'},
-            { data: 'September 1', name: 'September 1', class: 'text-center'},
-            { data: 'September 16', name: 'September 16', class: 'text-center'},
-            { data: 'October 1', name: 'October 1', class: 'text-center'},
-            { data: 'October 16', name: 'October 16', class: 'text-center'},
-            { data: 'November 1', name: 'November 1', class: 'text-center'},
-            { data: 'November 16', name: 'November 16', class: 'text-center'},
-            { data: 'December 1', name: 'December 1', class: 'text-center'},
+            { data: 'amount', name: 'amount', class:"td-amount"},
+            { data: '01/16', name: '01/16', class: 'text-center'},
+            { data: '02/01', name: '02/01', class: 'text-center'},
+            { data: '02/16', name: '02/16', class: 'text-center'},
+            { data: '03/01', name: '03/01', class: 'text-center'},
+            { data: '03/16', name: '03/16', class: 'text-center'},
+            { data: '04/01', name: '04/01', class: 'text-center'},
+            { data: '04/16', name: '04/16', class: 'text-center'},
+            { data: '05/01', name: '05/01', class: 'text-center'},
+            { data: '05/16', name: '05/16', class: 'text-center'},
+            { data: '06/01', name: '06/01', class: 'text-center'},
+            { data: '06/16', name: '06/16', class: 'text-center'},
+            { data: '07/01', name: '07/01', class: 'text-center'},
+            { data: '07/16', name: '07/16', class: 'text-center'},
+            { data: '08/01', name: '08/01', class: 'text-center'},
+            { data: '08/16', name: '08/16', class: 'text-center'},
+            { data: '09/01', name: '09/01', class: 'text-center'},
+            { data: '09/16', name: '09/16', class: 'text-center'},
+            { data: '10/01', name: '10/01', class: 'text-center'},
+            { data: '10/16', name: '10/16', class: 'text-center'},
+            { data: '11/01', name: '11/01', class: 'text-center'},
+            { data: '11/16', name: '11/16', class: 'text-center'},
+            { data: '12/01', name: '12/01', class: 'text-center'},
+
 
            
         ]
+    });
+    $('#members-table').on('click', 'input', function(){
+        var checkbox = $(this);
+        var row = checkbox.closest('tr');
+        var amount  = row.find('.td-amount').text();
+        var payment_date_id = checkbox.val();
+        var options = {
+                        member_id: row.attr('id'), 
+                        amount: amount, 
+                        payment_date_id: payment_date_id
+                    };
+        if($(this).is(':checked')){
+            $.ajax({
+                url: '/update-member-payment',
+                type: 'POST',
+                data: options,
+                success: function(data){
+
+                }
+            });
+        }
     });
 });
 </script>

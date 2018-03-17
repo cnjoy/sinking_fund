@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Loan extends Model
 {
+    protected $fillable = [
+        'lender_id',
+        'member_id',
+        'total_amount',
+        'terms_to_pay',
+        'is_paid',
+        'amount_per_term',
+        'start_at'
+        ];
     public function lender()
     {
          return $this->belongsTo('App\Lender');
