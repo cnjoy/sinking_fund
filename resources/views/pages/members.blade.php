@@ -8,7 +8,7 @@ Members
         <thead>
             <tr>
                 <th>Member (head)</th>
-                <th>Total</th>
+                <th>Amount/mo</th>
                 <th>01/16</th>
                 <th>02/01</th>
                 <th>02/16</th>
@@ -50,7 +50,7 @@ $(function() {
         ajax: '/datatables/members',
         columns: [
             { data: 'fullname', name: 'fullname'},
-            { data: 'amount', name: 'amount' },
+            { data: 'amount', name: 'amount', class:"td-amount"},
             { data: '01/16', name: '01/16', class: 'text-center'},
             { data: '02/01', name: '02/01', class: 'text-center'},
             { data: '02/16', name: '02/16', class: 'text-center'},
@@ -77,6 +77,27 @@ $(function() {
 
            
         ]
+    });
+    $('#members-table').on('click', 'input', function(){
+        var checkbox = $(this);
+        var row = checkbox.closest('tr');
+        var amount  = row.find('.td-amount').text();
+        var payment_date_id = checkbox.val();
+        var options = {
+                        member_id: row.attr('id'), 
+                        amount: amount, 
+                        payment_date_id: payment_date_id
+                    };
+        if($(this).is(':checked')){
+            $.ajax({
+                url: '/update-member-payment',
+                type: 'POST',
+                data: options,
+                success: function(data){
+
+                }
+            });
+        }
     });
 });
 </script>

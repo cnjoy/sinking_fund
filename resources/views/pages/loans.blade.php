@@ -86,11 +86,7 @@ Loans
 
 <script>
 $(function() {
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-        }
-    }); 
+    
     $('#members-table').DataTable({
         processing: true,
         serverSide: true,

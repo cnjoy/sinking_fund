@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Input;
 use App\Member;
+use App\MemberPaymentDate;
 use Response;
+
 
 class MembersController extends Controller
 {
@@ -83,5 +85,24 @@ class MembersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function updateMemberPayment() 
+    {
+        $input = Input::all();
+        $member_id = 0;
+        if( !empty($input['member_id']) ) {
+            $exp = explode('_', $input['member_id']);
+            $member_id = sizeof($exp) > 1 ? $exp[1] : 0;
+        }
+        $data['member_id'] = $member_id;
+        $data['amount'] = $input['amount'];
+        $data['payment_date_id'] = $input['payment_date_id'];
+        
+        $condition = $data;
+        
+        MemberPaymentDate::updateOrCreate($condition, $data );
+
+
     }
 }

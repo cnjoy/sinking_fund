@@ -97,35 +97,42 @@ class DatatablesController extends Controller
         $done = 0; $raw_columns = [];
          $members = Member::leftJoin('member_payment_dates', 'members.id', '=', 'member_payment_dates.member_id')
                         ->leftJoin('payment_dates', 'payment_dates.id', '=', 'member_payment_dates.payment_date_id')
-                        ->selectRaw("members.id as member_id, 
+                        ->selectRaw("
+                                    CONCAT('row_', members.id) as DT_RowId,
+                                    members.id as member_id, 
                                     first_name, last_name, 
                                     CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname,
                                     members.amount, str_month, 
                                     int_day,
                                     CONCAT(str_month, ' ' , int_day) as term,
                                     payment_date_id,
-                                    CASE WHEN month_day='01/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '01/16',
-CASE WHEN month_day='02/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '02/01',
-CASE WHEN month_day='02/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '02/16',
-CASE WHEN month_day='03/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '03/01',
-CASE WHEN month_day='03/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '03/16',
-CASE WHEN month_day='04/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '04/01',
-CASE WHEN month_day='04/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '04/16',
-CASE WHEN month_day='05/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '05/01',
-CASE WHEN month_day='05/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '05/16',
-CASE WHEN month_day='06/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '06/01',
-CASE WHEN month_day='06/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '06/16',
-CASE WHEN month_day='07/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '07/01',
-CASE WHEN month_day='07/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '07/16',
-CASE WHEN month_day='08/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '08/01',
-CASE WHEN month_day='08/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '08/16',
-CASE WHEN month_day='09/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '09/01',
-CASE WHEN month_day='09/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '09/16',
-CASE WHEN month_day='10/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '10/01',
-CASE WHEN month_day='10/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '10/16',
-CASE WHEN month_day='11/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '11/01',
-CASE WHEN month_day='11/16' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '11/16',
-CASE WHEN month_day='12/01' THEN '<input type=\"checkbox\" value=\"\" checked/>'   else  '<input type=\"checkbox\" value=\"\"/>'  END  AS '12/01'
+                                    
+                                    IF(MAX(CASE WHEN month_day='01/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"45\" checked />',  '<input type=\"checkbox\"  value=\"45\" />') AS '01/16',
+                                    IF(MAX(CASE WHEN month_day='02/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"46\" checked />',  '<input type=\"checkbox\"  value=\"46\" />') AS '02/01',
+                                    IF(MAX(CASE WHEN month_day='02/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"47\" checked />',  '<input type=\"checkbox\"  value=\"47\" />') AS '02/16',
+                                    IF(MAX(CASE WHEN month_day='03/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"48\" checked />',  '<input type=\"checkbox\"  value=\"48\" />') AS '03/01',
+                                    IF(MAX(CASE WHEN month_day='03/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"49\" checked />',  '<input type=\"checkbox\"  value=\"49\" />') AS '03/16',
+                                    IF(MAX(CASE WHEN month_day='04/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"50\" checked />',  '<input type=\"checkbox\"  value=\"50\" />') AS '04/01',
+                                    IF(MAX(CASE WHEN month_day='04/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"51\" checked />',  '<input type=\"checkbox\"  value=\"51\" />') AS '04/16',
+                                    IF(MAX(CASE WHEN month_day='05/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"52\" checked />',  '<input type=\"checkbox\"  value=\"52\" />') AS '05/01',
+                                    IF(MAX(CASE WHEN month_day='05/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"53\" checked />',  '<input type=\"checkbox\"  value=\"53\" />') AS '05/16',
+                                    IF(MAX(CASE WHEN month_day='06/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"54\" checked />',  '<input type=\"checkbox\"  value=\"54\" />') AS '06/01',
+                                    IF(MAX(CASE WHEN month_day='06/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"55\" checked />',  '<input type=\"checkbox\"  value=\"55\" />') AS '06/16',
+                                    IF(MAX(CASE WHEN month_day='07/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"56\" checked />',  '<input type=\"checkbox\"  value=\"56\" />') AS '07/01',
+                                    IF(MAX(CASE WHEN month_day='07/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"57\" checked />',  '<input type=\"checkbox\"  value=\"57\" />') AS '07/16',
+                                    IF(MAX(CASE WHEN month_day='08/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"58\" checked />',  '<input type=\"checkbox\"  value=\"58\" />') AS '08/01',
+                                    IF(MAX(CASE WHEN month_day='08/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"59\" checked />',  '<input type=\"checkbox\"  value=\"59\" />') AS '08/16',
+                                    IF(MAX(CASE WHEN month_day='09/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"60\" checked />',  '<input type=\"checkbox\"  value=\"60\" />') AS '09/01',
+                                    IF(MAX(CASE WHEN month_day='09/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"61\" checked />',  '<input type=\"checkbox\"  value=\"61\" />') AS '09/16',
+                                    IF(MAX(CASE WHEN month_day='10/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"62\" checked />',  '<input type=\"checkbox\"  value=\"62\" />') AS '10/01',
+                                    IF(MAX(CASE WHEN month_day='10/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"63\" checked />',  '<input type=\"checkbox\"  value=\"63\" />') AS '10/16',
+                                    IF(MAX(CASE WHEN month_day='11/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"64\" checked />',  '<input type=\"checkbox\"  value=\"64\" />') AS '11/01',
+                                    IF(MAX(CASE WHEN month_day='11/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"65\" checked />',  '<input type=\"checkbox\"  value=\"65\" />') AS '11/16',
+                                    IF(MAX(CASE WHEN month_day='12/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"66\" checked />',  '<input type=\"checkbox\"  value=\"66\" />') AS '12/01'
+                                    
+                                    
+                                    
+                                    
 
 
 

@@ -23,3 +23,12 @@
 <script src="js/jquery/dist/jquery.min.js"></script>
 <!-- <script src="js/plugins/jquery.numeric-only.js"></script> -->
 
+<script>
+$(function(){
+  $.ajaxSetup({
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+        }
+    }); 
+})
+</script>
