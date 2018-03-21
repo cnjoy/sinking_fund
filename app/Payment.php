@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use DB;
 class Payment extends Model
 {
+
+    protected $fillable = [ 'paymentable_id', 
+                            'paymentable_type', 
+                            'amount', 
+                            'payment_date_id'];
      /**
      * Get all of the owning commentable models.
      */
@@ -13,6 +18,23 @@ class Payment extends Model
     {
         return $this->morphTo();
     }
+
+    /**
+     * Create or update a record matching the attributes, and fill it with values.
+     *
+     * @param  array  $attributes
+     * @param  array  $values
+     * @return static
+     */
+    public static function updateOrCreate(array $attributes, array $values = array())
+    {
+        $instance = static::firstOrNew($attributes);
+
+        $instance->fill($values)->save();
+
+        return $instance;
+    }
+
 
     
      /**

@@ -21,6 +21,7 @@ Route::get('/members', function () {
     return view('pages/members');
 });
 
+// loans page
 Route::get('/loans', function () {
     return view('pages/loans');
 });
@@ -38,26 +39,27 @@ Route::post('/submit-loan', ['as' => 'form_url', 'uses' => 'LoansController@add'
 Route::get('/datatables', 'DatatablesController@getIndex');
 Route::get('/datatables/members', 'DatatablesController@membersData');
 Route::get('/datatables/test', 'DatatablesController@test');
+
 Route::get('/datatables/lenders', 'DatatablesController@lendersData');
+
+// get datatable in loan page
 Route::get('/datatables/loans', 'DatatablesController@loansData');
+
+// show loan details in loans page
 Route::get('/single-loan/{any}', 'DatatablesController@getSingleLoan');
+ 
+// update amount in loans page details
+Route::post('/update-payment', ['uses' => 'LoansController@updatePaymentRow']);
+
+
 
 Route::get('/get_members', 'LoansController@getMembers');
 Route::resource('members', 'MembersController');
 
-Route::post('/update-payment', ['uses' => 'LoansController@updatePaymentRow']);
+
+
+// ajax members update payment
 Route::post('/update-member-payment', ['uses' => 'MembersController@updateMemberPayment']);
-
-
-// Route::get('member/{member_id}', function (App\Member $member) {
-//     return $member->get()->is_dir;
-// });
-// Route::get('member/{member_id}', 'App\Member');
-// Route::get('/submit-loan', 'LoansController@add');
-// Route::get('datatables', 'DatatablesController', [
-//     'anyData'  => 'datatables.data',
-//     'getIndex' => 'datatables',
-// ]);
 
 
 

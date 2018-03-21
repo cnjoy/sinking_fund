@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Lender;
 use App\Loan;
+use App\Payment;
 use App\LoanPaymentDate;
 use App\PaymentDate;
 use Illuminate\Http\Request;
@@ -82,18 +83,25 @@ class LoansController extends Controller
         $amount = $input['value'];
         $loan_id = $input['pk'];
 
-        // $results = LoanPaymentDate::where([
-        //             'loan_id', '=', $loan_id,
-        //             'payment_date_id', '=', $payment_date_id
-        //             ])->get();
+
+        // $condition =['loan_id' => $loan_id,'payment_date_id'=> $payment_date_id];
+        // $data = $condition;
+        // $data['amount'] = $amount;
+        // print_r($condition);
+        // LoanPaymentDate::updateOrCreate($condition, $data );
+
+        $data['paymentable_id'] = $loan_id;
+        $data['paymentable_type'] = 'App\Loan';
+        $data['payment_date_id'] = $payment_date_id;
         
-
-        $condition =['loan_id' => $loan_id,'payment_date_id'=> $payment_date_id];
-        $data = $condition;
+        $condition = $data; // don't include amount in condition
+        
         $data['amount'] = $amount;
-        print_r($condition);
 
-        LoanPaymentDate::updateOrCreate($condition, $data );
+        Payment::updateOrCreate($condition, $data );
+
+
+        
 
         
         // $lpd->loan_id = $loan_id;

@@ -38,6 +38,7 @@ class MembersController extends Controller
         $member = Member::find($member_id);
         $interest = ($total_loan/$total_shares) * $member->shares;
         $fund_value = $interest + $deposit;
+       
         
         // get target savings and expected amount
         $date_count = PaymentDate::count();
@@ -46,11 +47,19 @@ class MembersController extends Controller
 
         $p = new Payment();
         $total_collection = $p->getTotalPayments(1);
+        
         $total_payment = $p->getTotalPayments(2);
         
         // getavailable cash
         $total_payments = $p->getTotalPayments();
         $available_cash = $total_payments-$total_loan;
+
+        // get percentage
+        $tc_percentage = round( ($total_collection/$collection_per_payday) * 100 );
+        $tl_percentage = round( ($total_loan/$total_payments) * 100);
+        $tp_percentage = round( ($total_payment/$total_loan) * 100);
+
+
 
         $data = [
                     'deposit' =>  format2($deposit),
@@ -61,9 +70,9 @@ class MembersController extends Controller
                     'fund_value' => format2($fund_value),
                     'target_savings' => format2($target_savings),
                     'expected_amount' => format2($expected_amount),
-                    'total_collection' => ['amount'=> format2($total_collection), 'percent' => '10'],
-                    'total_loan' => ['amount'=> format2($total_loan), 'percent' => '10'],
-                    'total_payment' => ['amount'=> format2($total_payment), 'percent' => '10'],
+                    'total_collection' => ['amount'=> format2($total_collection), 'percent' => $tc_percentage],
+                    'total_loan' => ['amount'=> format2($total_loan), 'percent' => $tl_percentage],
+                    'total_payment' => ['amount'=> format2($total_payment), 'percent' => $tp_percentage],
                     
 
                 ];
@@ -148,13 +157,18 @@ class MembersController extends Controller
             $exp = explode('_', $input['member_id']);
             $member_id = sizeof($exp) > 1 ? $exp[1] : 0;
         }
-        $data['member_id'] = $member_id;
+        // $data['member_id'] = $member_id;
+        // $data['amount'] = $input['amount'];
+        // $data['payment_date_id'] = $input['payment_date_id'];
+       
+        $data['paymentable_id'] = $member_id;
+        $data['paymentable_type'] = 'App\Member';
         $data['amount'] = $input['amount'];
         $data['payment_date_id'] = $input['payment_date_id'];
         
         $condition = $data;
         
-        MemberPaymentDate::updateOrCreate($condition, $data );
+        Payment::updateOrCreate($condition, $data );
 
 
     }
