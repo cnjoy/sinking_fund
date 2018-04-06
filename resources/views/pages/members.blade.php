@@ -82,13 +82,24 @@ $(function() {
         var checkbox = $(this);
         var row = checkbox.closest('tr');
         var amount  = row.find('.td-amount').text();
-        var payment_date_id = checkbox.val();
+        var month_day = checkbox.val();
         var options = {
                         member_id: row.attr('id'), 
                         amount: amount, 
-                        payment_date_id: payment_date_id
+                        month_day: month_day,
+                        remove: 0
                     };
         if($(this).is(':checked')){
+            $.ajax({
+                url: '/update-member-payment',
+                type: 'POST',
+                data: options,
+                success: function(data){
+
+                }
+            });
+        }else{
+            options.remove = 1;
             $.ajax({
                 url: '/update-member-payment',
                 type: 'POST',

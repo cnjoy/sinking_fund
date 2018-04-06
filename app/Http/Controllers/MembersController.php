@@ -9,10 +9,11 @@ use App\Loan;
 use App\MemberPaymentDate;
 use App\PaymentDate;
 use Response;
+use Illuminate\Support\Facades\Auth;
 
-
-class MembersController extends Controller
+class MembersController extends MyBaseController
 {
+ 
     /**
      * Display a listing of the resource.
      *
@@ -20,22 +21,26 @@ class MembersController extends Controller
      */
     public function index()
     {
-        
         return view('pages/members');
     }
 
     public function dashboard()
     {
-        $member_id = 1;
+        
+        $member = $this->member;
+        $member_id = $member->id;
+
+        // $member_payments = $this->member_payments;
+        
+
         $collection_per_payday = Member::all()->sum('amount');
         $loan_count = Loan::count();
 
         $total_shares = Member::all()->sum('shares');
-        $deposit = Member::find(1)->payments->sum('amount');
+        $deposit =   $member->payments->sum('amount');
        
         // get fund value
         $total_loan = Loan::all()->sum('total_amount');
-        $member = Member::find($member_id);
         $interest = ($total_loan/$total_shares) * $member->shares;
         $fund_value = $interest + $deposit;
        
@@ -78,7 +83,7 @@ class MembersController extends Controller
                 ];
         
         // $data['collection_per_payday'] = format2($collection_per_payday);
-        pr($data);
+        // pr($data);
         return view('pages/dashboard')->with($data);
     }
 
@@ -157,18 +162,21 @@ class MembersController extends Controller
             $exp = explode('_', $input['member_id']);
             $member_id = sizeof($exp) > 1 ? $exp[1] : 0;
         }
-        // $data['member_id'] = $member_id;
-        // $data['amount'] = $input['amount'];
-        // $data['payment_date_id'] = $input['payment_date_id'];
        
         $data['paymentable_id'] = $member_id;
         $data['paymentable_type'] = 'App\Member';
         $data['amount'] = $input['amount'];
-        $data['payment_date_id'] = $input['payment_date_id'];
+        // $data['payment_date_id'] = $input['payment_date_id'];
+        $data['month_day'] = $input['month_day'];
         
         $condition = $data;
-        
-        Payment::updateOrCreate($condition, $data );
+        if( $input['remove'] ) {
+            Payment::whereArray($condition )->delete();
+            
+        }else {
+            Payment::updateOrCreate($condition, $data );
+        }
+       
 
 
     }

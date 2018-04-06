@@ -12,6 +12,7 @@ use Response;
 use Illuminate\Support\Facades\Input;
 class LoansController extends Controller
 {
+
     public function getMembers(){
     	$members = Member::all()->toArray();
     	$result['results'] = $members;
@@ -79,7 +80,7 @@ class LoansController extends Controller
         
         $input = Input::all();
 
-        $payment_date_id = explode('_', $input['name'])[1];
+        $month_day = explode('_', $input['name'])[1];
         $amount = $input['value'];
         $loan_id = $input['pk'];
 
@@ -92,7 +93,7 @@ class LoansController extends Controller
 
         $data['paymentable_id'] = $loan_id;
         $data['paymentable_type'] = 'App\Loan';
-        $data['payment_date_id'] = $payment_date_id;
+        $data['month_day'] = $month_day;
         
         $condition = $data; // don't include amount in condition
         

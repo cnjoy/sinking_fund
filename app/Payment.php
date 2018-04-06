@@ -10,7 +10,9 @@ class Payment extends Model
     protected $fillable = [ 'paymentable_id', 
                             'paymentable_type', 
                             'amount', 
-                            'payment_date_id'];
+                            'paymentable_id',
+                            'month_day'];
+    protected $table = 'payments';
      /**
      * Get all of the owning commentable models.
      */
@@ -35,7 +37,27 @@ class Payment extends Model
         return $instance;
     }
 
+    // public function delete($whereArray)
+    // {
+    //     $query = DB::table($this->table);
+    //     foreach($whereArray as $field => $value) {
+    //         $query->where($field, $value);
+    //     }
+    //     $query->delete();
+    // }
 
+    public function scopeWhereArray($query, $array) {
+        foreach($array as $field => $value) {
+            $query->where($field, $value);
+        }
+        return $query;
+
+        //     $query = DB::table($this->table);
+        // foreach($whereArray as $field => $value) {
+        //     $query->where($field, $value);
+        // }
+        // $query->delete();
+    }
     
      /**
      * Get the phone record associated with the members.
