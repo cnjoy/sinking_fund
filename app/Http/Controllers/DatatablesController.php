@@ -324,6 +324,18 @@ class DatatablesController extends Controller
         // return Response::json(Datatables::of($loans)->rawColumns($raw_columns)->make(true));
     }
 
+    /**
+     * Process datatables ajax request.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getProfileContribution()
+    {
+        $payments = Auth::user()->member->payments;
+       
+        return Datatables::of($payments)->make(true);
+    }
+
     
   
 

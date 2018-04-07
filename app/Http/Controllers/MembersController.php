@@ -14,14 +14,16 @@ use Illuminate\Support\Facades\Auth;
 class MembersController extends MyBaseController
 {
  
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function index()
     {
         return view('pages/members');
+    }
+
+
+    public function profile()
+    {
+        return view('pages/profile');
     }
 
     public function dashboard()

@@ -15,7 +15,7 @@ class Loan extends Model
         'amount_per_term',
         'start_at'
         ];
-
+    
     public function payments()
     {
         return $this->morphMany('App\Payment', 'paymentable');
@@ -32,5 +32,6 @@ class Loan extends Model
                     ->withTimestamps();
     }
 
+    // public function get_
 
 }

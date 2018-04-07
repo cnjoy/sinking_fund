@@ -16,6 +16,7 @@ Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/admin', 'AdminController@index')->name('home');
 Route::get('/test', 'testController@index');
+Route::get('/profile', 'MembersController@profile');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', 'HomeController@index')->name('home');
@@ -23,6 +24,7 @@ Route::group(['middleware' => 'auth'], function(){
         return view('home');
     });
     
+    Route::get('/profile', 'MembersController@profile')->name('profile');
     // Route::get('/members', function () {
     //     return view('pages/members');
     // });
@@ -44,6 +46,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/datatables/users-data', 'DatatablesController@usersData');
     Route::get('/datatables/test', 'DatatablesController@test');
     Route::get('/datatables/lenders', 'DatatablesController@lendersData');
+    Route::get('/datatables/profile-contribution', 'DatatablesController@getProfileContribution');
     
     // get datatable in loan page
     Route::get('/datatables/loans', 'DatatablesController@loansData');
