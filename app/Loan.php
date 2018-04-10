@@ -15,7 +15,10 @@ class Loan extends Model
         'amount_per_term',
         'start_at'
         ];
-    
+    public function member()
+    {
+        return $this->belongsTo('App\Member');
+    }
     public function payments()
     {
         return $this->morphMany('App\Payment', 'paymentable');

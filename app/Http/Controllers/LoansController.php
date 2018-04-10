@@ -76,6 +76,17 @@ class LoansController extends Controller
 
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        return view('pages/members_edit');
+    }
+
     public function updatePaymentRow(){
         
         $input = Input::all();

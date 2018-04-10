@@ -248,9 +248,9 @@ class DatatablesController extends Controller
     public function loansData()
     {
         if( Auth::user()->isAdmin() ) {
-            $lender = "CONCAT(lenders.first_name, ' ' , lenders.last_name, '(', IF(LENGTH(codename)> 0, codename, 'anonymous'), ')') as lender";
+            $lender = "CONCAT('<a href=\"loans/edit/',loans.id,'\">',lenders.first_name, ' ' , lenders.last_name, '(', IF(LENGTH(lenders.codename)> 0, lenders.codename, 'anonymous'), ')','</a>') as lender";
         }else {
-            $lender = "IF(LENGTH(codename)> 0, codename, 'anonymous') as lender";
+            $lender = "IF(LENGTH(lenders.codename)> 0, lenders.codename, 'anonymous') as lender";
         }
         $loans = Loan::leftJoin('lenders', 'lenders.id', '=', 'loans.lender_id')
                         ->leftJoin('members', 'members.id', '=', 'loans.member_id')
@@ -262,7 +262,7 @@ class DatatablesController extends Controller
                         ->selectRaw("
                                     CONCAT('row_', loans.id) as DT_RowId,
                                     " . $lender  . ",
-                                    codename,
+                                    lenders.codename,
                                     CONCAT(members.first_name, ' ' , members.last_name) AS member,
                                     FORMAT(total_amount,2, 'de_DE') as total_amount, 
                                     months_to_pay, 

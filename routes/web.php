@@ -16,7 +16,7 @@ Auth::routes();
 // Route::get('/home', 'HomeController@index')->name('home');
 // Route::get('/admin', 'AdminController@index')->name('home');
 Route::get('/test', 'testController@index');
-Route::get('/profile', 'MembersController@profile');
+// Route::get('/profile', 'MembersController@profile');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', 'HomeController@index')->name('home');
@@ -58,10 +58,12 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/update-payment', ['uses' => 'LoansController@updatePaymentRow']);
     Route::get('/get_members', 'LoansController@getMembers');
     Route::resource('members', 'MembersController');
+    Route::resource('loans', 'LoansController');
     
     // ajax members update payment
     Route::post('/update-member-payment', ['uses' => 'MembersController@updateMemberPayment']);
-    
+    // Route::post('/profile', ['uses' => 'MembersController@profile']);
+    // Route::post('/profile/{id}',['uses' =>'MembersController@edit']);
 });
 
 

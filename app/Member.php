@@ -11,6 +11,11 @@ class Member extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    public function loans()
+    {
+        return $this->hasMany('App\Loan');
+    }
     
     public function payments()
     {

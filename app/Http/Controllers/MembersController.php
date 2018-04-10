@@ -20,9 +20,10 @@ class MembersController extends MyBaseController
         return view('pages/members');
     }
 
-
     public function profile()
     {
+        pr(Response::json(Auth::user()->member->loans));
+        // pr(Auth::user()->member->loans);
         return view('pages/profile');
     }
 
@@ -130,7 +131,8 @@ class MembersController extends MyBaseController
      */
     public function edit($id)
     {
-        //
+        // return redirect('profile');
+        pr('test');
     }
 
     /**
@@ -142,7 +144,15 @@ class MembersController extends MyBaseController
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = Input::all();
+        $member = Auth::user()->member;
+        $member->first_name = $input['first_name'];
+        $member->last_name = $input['last_name'];
+        $member->codename = $input['codename'];
+        $member->email = $input['email'];
+        $member->phone = $input['phone'];
+        $member->save();
+        return redirect('profile');
     }
 
     /**
