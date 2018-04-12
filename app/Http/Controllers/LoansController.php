@@ -13,6 +13,59 @@ use Illuminate\Support\Facades\Input;
 class LoansController extends Controller
 {
 
+    public function index()
+    {
+        return view('pages/loans');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $loan = Loan::find($id);
+        $data['id']   = $id;
+        $data['first_name'] = $loan->lender->first_name;
+        $data['last_name']  = $loan->lender->last_name;
+        $data['codename']   = $loan->lender->codename;
+        $data['is_member']   = $loan->lender->is_member;
+        $data['email']   = "";
+        $data['phone']      = $loan->lender->phone;
+        $data['amount']     = $loan->total_amount;
+        
+        pr($data);
+        return view('pages/members_edit', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $input  = Input::all();
+        $loan   = Loan::find($id);
+
+        $loan->lender->first_name = $input['first_name'];
+        $loan->lender->last_name = $input['last_name'];
+        $loan->lender->codename = $input['codename'];
+        $loan->lender->email = $input['email'];
+        $loan->lender->phone = $input['phone'];
+        $loan->lender->is_member = isset($input['is_member']) && $input['is_member']  == 1 ? 1 : 0;
+        $loan->lender->save();
+
+        $loan->total_amount = $input['amount'];
+        $loan->save();
+
+        return redirect('loans/'.$id.'/edit');
+    }
+
     public function getMembers(){
     	$members = Member::all()->toArray();
     	$result['results'] = $members;
@@ -23,7 +76,6 @@ class LoansController extends Controller
     	};
 
     	$result['results'] = array_map($data_map, $members);
-
     	
     	return Response::json($result);
     }
@@ -76,16 +128,7 @@ class LoansController extends Controller
 
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        return view('pages/members_edit');
-    }
+    
 
     public function updatePaymentRow(){
         

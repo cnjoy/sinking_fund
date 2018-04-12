@@ -47,12 +47,13 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/datatables/test', 'DatatablesController@test');
     Route::get('/datatables/lenders', 'DatatablesController@lendersData');
     Route::get('/datatables/profile-contribution', 'DatatablesController@getProfileContribution');
+    Route::get('/datatables/lender-payment/{id}', 'DatatablesController@getLenderPayment');
     
     // get datatable in loan page
     Route::get('/datatables/loans', 'DatatablesController@loansData');
     
     // show loan details in loans page
-    Route::get('/single-loan/{any}', 'DatatablesController@getSingleLoan');
+    Route::get('/single-loan/{id}', 'DatatablesController@getSingleLoan');
      
     // update amount in loans page details
     Route::post('/update-payment', ['uses' => 'LoansController@updatePaymentRow']);

@@ -22,8 +22,7 @@ class MembersController extends MyBaseController
 
     public function profile()
     {
-        pr(Response::json(Auth::user()->member->loans));
-        // pr(Auth::user()->member->loans);
+
         return view('pages/profile');
     }
 

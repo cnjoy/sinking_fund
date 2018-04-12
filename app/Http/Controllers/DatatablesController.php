@@ -248,7 +248,7 @@ class DatatablesController extends Controller
     public function loansData()
     {
         if( Auth::user()->isAdmin() ) {
-            $lender = "CONCAT('<a href=\"loans/edit/',loans.id,'\">',lenders.first_name, ' ' , lenders.last_name, '(', IF(LENGTH(lenders.codename)> 0, lenders.codename, 'anonymous'), ')','</a>') as lender";
+            $lender = "CONCAT('<a href=\"loans/',loans.id,'/edit\">',lenders.first_name, ' ' , lenders.last_name, '(', IF(LENGTH(lenders.codename)> 0, lenders.codename, 'anonymous'), ')','</a>') as lender";
         }else {
             $lender = "IF(LENGTH(lenders.codename)> 0, lenders.codename, 'anonymous') as lender";
         }
@@ -325,7 +325,7 @@ class DatatablesController extends Controller
     }
 
     /**
-     * Process datatables ajax request.
+     * Members contribution displayed in profile
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -336,6 +336,17 @@ class DatatablesController extends Controller
         return Datatables::of($payments)->make(true);
     }
 
+    /**
+     * Lenders payment displayed in members (edit)profile 
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getLenderPayment($id)
+    {
+        $payments = Loan::find($id)->payments;
+       
+        return Datatables::of($payments)->make(true);
+    }
     
   
 
