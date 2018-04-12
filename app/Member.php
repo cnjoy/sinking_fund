@@ -6,6 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 
 class Member extends Model
 {
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+
+    public function loans()
+    {
+        return $this->hasMany('App\Loan');
+    }
+    
+    public function payments()
+    {
+        return $this->morphMany('App\Payment', 'paymentable');
+    }
     /**
      * Get the payment dates record associated with the members.
      */

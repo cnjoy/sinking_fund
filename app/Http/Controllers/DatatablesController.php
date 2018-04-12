@@ -6,11 +6,14 @@ use Illuminate\Http\Request;
 use App\Member;
 use App\PaymentDate;
 use App\Loan;
+use App\Payment;
+use App\User;
 use App\MemberPaymentDate;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers;
 use DB;
 use Response;
+use Illuminate\Support\Facades\Auth;
 class DatatablesController extends Controller
 {
     /**
@@ -94,9 +97,72 @@ class DatatablesController extends Controller
      */
     public function membersData()
     {
+        // <i class="fa fa-check text-success text-center"></i>
+        
         $done = 0; $raw_columns = [];
-         $members = Member::leftJoin('member_payment_dates', 'members.id', '=', 'member_payment_dates.member_id')
-                        ->leftJoin('payment_dates', 'payment_dates.id', '=', 'member_payment_dates.payment_date_id')
+        if( Auth::user()->isAdmin() ) 
+        {
+            $fields = "IF(MAX(CASE WHEN payments.month_day='01/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"01/16\" checked />',  '<input type=\"checkbox\" value=\"01/16\"  />') as '01/16',
+            IF(MAX(CASE WHEN payments.month_day='02/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"02/01\" checked />',  '<input type=\"checkbox\" value=\"02/01\"  />') as '02/01',
+            IF(MAX(CASE WHEN payments.month_day='02/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"02/16\" checked />',  '<input type=\"checkbox\" value=\"02/16\"  />') as '02/16',
+            IF(MAX(CASE WHEN payments.month_day='03/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"03/01\" checked />',  '<input type=\"checkbox\" value=\"03/01\"  />') as '03/01',
+            IF(MAX(CASE WHEN payments.month_day='03/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"03/16\" checked />',  '<input type=\"checkbox\" value=\"03/16\"  />') as '03/16',
+            IF(MAX(CASE WHEN payments.month_day='04/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"04/01\" checked />',  '<input type=\"checkbox\" value=\"04/01\"  />') as '04/01',
+            IF(MAX(CASE WHEN payments.month_day='04/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"04/16\" checked />',  '<input type=\"checkbox\" value=\"04/16\"  />') as '04/16',
+            IF(MAX(CASE WHEN payments.month_day='05/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"05/01\" checked />',  '<input type=\"checkbox\" value=\"05/01\"  />') as '05/01',
+            IF(MAX(CASE WHEN payments.month_day='05/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"05/16\" checked />',  '<input type=\"checkbox\" value=\"05/16\"  />') as '05/16',
+            IF(MAX(CASE WHEN payments.month_day='06/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"06/01\" checked />',  '<input type=\"checkbox\" value=\"06/01\"  />') as '06/01',
+            IF(MAX(CASE WHEN payments.month_day='06/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"06/16\" checked />',  '<input type=\"checkbox\" value=\"06/16\"  />') as '06/16',
+            IF(MAX(CASE WHEN payments.month_day='07/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"07/01\" checked />',  '<input type=\"checkbox\" value=\"07/01\"  />') as '07/01',
+            IF(MAX(CASE WHEN payments.month_day='07/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"07/16\" checked />',  '<input type=\"checkbox\" value=\"07/16\"  />') as '07/16',
+            IF(MAX(CASE WHEN payments.month_day='08/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"08/01\" checked />',  '<input type=\"checkbox\" value=\"08/01\"  />') as '08/01',
+            IF(MAX(CASE WHEN payments.month_day='08/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"08/16\" checked />',  '<input type=\"checkbox\" value=\"08/16\"  />') as '08/16',
+            IF(MAX(CASE WHEN payments.month_day='09/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"09/01\" checked />',  '<input type=\"checkbox\" value=\"09/01\"  />') as '09/01',
+            IF(MAX(CASE WHEN payments.month_day='09/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"09/16\" checked />',  '<input type=\"checkbox\" value=\"09/16\"  />') as '09/16',
+            IF(MAX(CASE WHEN payments.month_day='10/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"10/01\" checked />',  '<input type=\"checkbox\" value=\"10/01\"  />') as '10/01',
+            IF(MAX(CASE WHEN payments.month_day='10/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"10/16\" checked />',  '<input type=\"checkbox\" value=\"10/16\"  />') as '10/16',
+            IF(MAX(CASE WHEN payments.month_day='11/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"11/01\" checked />',  '<input type=\"checkbox\" value=\"11/01\"  />') as '11/01',
+            IF(MAX(CASE WHEN payments.month_day='11/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"11/16\" checked />',  '<input type=\"checkbox\" value=\"11/16\"  />') as '11/16',
+            IF(MAX(CASE WHEN payments.month_day='12/01' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"12/01\" checked />',  '<input type=\"checkbox\" value=\"12/01\"  />') as '12/01'
+            
+                    ";
+                                    
+                                    
+        }else{
+                                    
+            $fields = "IF(MAX(CASE WHEN payments.month_day='01/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '01/16',
+            IF(MAX(CASE WHEN payments.month_day='02/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '02/01',
+            IF(MAX(CASE WHEN payments.month_day='02/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '02/16',
+            IF(MAX(CASE WHEN payments.month_day='03/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '03/01',
+            IF(MAX(CASE WHEN payments.month_day='03/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '03/16',
+            IF(MAX(CASE WHEN payments.month_day='04/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '04/01',
+            IF(MAX(CASE WHEN payments.month_day='04/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '04/16',
+            IF(MAX(CASE WHEN payments.month_day='05/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '05/01',
+            IF(MAX(CASE WHEN payments.month_day='05/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '05/16',
+            IF(MAX(CASE WHEN payments.month_day='06/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '06/01',
+            IF(MAX(CASE WHEN payments.month_day='06/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '06/16',
+            IF(MAX(CASE WHEN payments.month_day='07/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '07/01',
+            IF(MAX(CASE WHEN payments.month_day='07/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '07/16',
+            IF(MAX(CASE WHEN payments.month_day='08/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '08/01',
+            IF(MAX(CASE WHEN payments.month_day='08/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '08/16',
+            IF(MAX(CASE WHEN payments.month_day='09/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '09/01',
+            IF(MAX(CASE WHEN payments.month_day='09/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '09/16',
+            IF(MAX(CASE WHEN payments.month_day='10/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '10/01',
+            IF(MAX(CASE WHEN payments.month_day='10/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '10/16',
+            IF(MAX(CASE WHEN payments.month_day='11/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '11/01',
+            IF(MAX(CASE WHEN payments.month_day='11/16' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '11/16',
+            IF(MAX(CASE WHEN payments.month_day='12/01' THEN payments.amount END) > 0, '<i class=\"fa fa-check text-success text-center\"></i>',  '') as '12/01'
+            
+            
+                        ";
+
+        }
+
+         $members = Member::leftJoin('payments', function($join){
+            $join->on('members.id', '=', 'payments.paymentable_id');
+            $join->on('payments.paymentable_type', 'like', DB::raw("'%Member'"));
+         })
+                        ->leftJoin('payment_dates', 'payment_dates.id', '=', 'payments.payment_date_id')
                         ->selectRaw("
                                     CONCAT('row_', members.id) as DT_RowId,
                                     members.id as member_id, 
@@ -106,36 +172,7 @@ class DatatablesController extends Controller
                                     int_day,
                                     CONCAT(str_month, ' ' , int_day) as term,
                                     payment_date_id,
-                                    
-                                    IF(MAX(CASE WHEN month_day='01/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"45\" checked />',  '<input type=\"checkbox\"  value=\"45\" />') AS '01/16',
-                                    IF(MAX(CASE WHEN month_day='02/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"46\" checked />',  '<input type=\"checkbox\"  value=\"46\" />') AS '02/01',
-                                    IF(MAX(CASE WHEN month_day='02/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"47\" checked />',  '<input type=\"checkbox\"  value=\"47\" />') AS '02/16',
-                                    IF(MAX(CASE WHEN month_day='03/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"48\" checked />',  '<input type=\"checkbox\"  value=\"48\" />') AS '03/01',
-                                    IF(MAX(CASE WHEN month_day='03/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"49\" checked />',  '<input type=\"checkbox\"  value=\"49\" />') AS '03/16',
-                                    IF(MAX(CASE WHEN month_day='04/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"50\" checked />',  '<input type=\"checkbox\"  value=\"50\" />') AS '04/01',
-                                    IF(MAX(CASE WHEN month_day='04/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"51\" checked />',  '<input type=\"checkbox\"  value=\"51\" />') AS '04/16',
-                                    IF(MAX(CASE WHEN month_day='05/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"52\" checked />',  '<input type=\"checkbox\"  value=\"52\" />') AS '05/01',
-                                    IF(MAX(CASE WHEN month_day='05/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"53\" checked />',  '<input type=\"checkbox\"  value=\"53\" />') AS '05/16',
-                                    IF(MAX(CASE WHEN month_day='06/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"54\" checked />',  '<input type=\"checkbox\"  value=\"54\" />') AS '06/01',
-                                    IF(MAX(CASE WHEN month_day='06/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"55\" checked />',  '<input type=\"checkbox\"  value=\"55\" />') AS '06/16',
-                                    IF(MAX(CASE WHEN month_day='07/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"56\" checked />',  '<input type=\"checkbox\"  value=\"56\" />') AS '07/01',
-                                    IF(MAX(CASE WHEN month_day='07/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"57\" checked />',  '<input type=\"checkbox\"  value=\"57\" />') AS '07/16',
-                                    IF(MAX(CASE WHEN month_day='08/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"58\" checked />',  '<input type=\"checkbox\"  value=\"58\" />') AS '08/01',
-                                    IF(MAX(CASE WHEN month_day='08/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"59\" checked />',  '<input type=\"checkbox\"  value=\"59\" />') AS '08/16',
-                                    IF(MAX(CASE WHEN month_day='09/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"60\" checked />',  '<input type=\"checkbox\"  value=\"60\" />') AS '09/01',
-                                    IF(MAX(CASE WHEN month_day='09/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"61\" checked />',  '<input type=\"checkbox\"  value=\"61\" />') AS '09/16',
-                                    IF(MAX(CASE WHEN month_day='10/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"62\" checked />',  '<input type=\"checkbox\"  value=\"62\" />') AS '10/01',
-                                    IF(MAX(CASE WHEN month_day='10/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"63\" checked />',  '<input type=\"checkbox\"  value=\"63\" />') AS '10/16',
-                                    IF(MAX(CASE WHEN month_day='11/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"64\" checked />',  '<input type=\"checkbox\"  value=\"64\" />') AS '11/01',
-                                    IF(MAX(CASE WHEN month_day='11/16' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"65\" checked />',  '<input type=\"checkbox\"  value=\"65\" />') AS '11/16',
-                                    IF(MAX(CASE WHEN month_day='12/01' THEN member_payment_dates.amount END)  > 0,  '<input type=\"checkbox\"  value=\"66\" checked />',  '<input type=\"checkbox\"  value=\"66\" />') AS '12/01'
-                                    
-                                    
-                                    
-                                    
-
-
-
+                                    " . $fields . "
 
 
                                     ")
@@ -149,6 +186,7 @@ class DatatablesController extends Controller
 
         return Datatables::of($members)->rawColumns($raw_columns)->make(true);
     }
+
 
     /**
      * Process datatables ajax request.
@@ -209,22 +247,30 @@ class DatatablesController extends Controller
      */
     public function loansData()
     {
+        if( Auth::user()->isAdmin() ) {
+            $lender = "CONCAT('<a href=\"loans/',loans.id,'/edit\">',lenders.first_name, ' ' , lenders.last_name, '(', IF(LENGTH(lenders.codename)> 0, lenders.codename, 'anonymous'), ')','</a>') as lender";
+        }else {
+            $lender = "IF(LENGTH(lenders.codename)> 0, lenders.codename, 'anonymous') as lender";
+        }
         $loans = Loan::leftJoin('lenders', 'lenders.id', '=', 'loans.lender_id')
                         ->leftJoin('members', 'members.id', '=', 'loans.member_id')
-                        ->leftJoin('loan_payment_dates', 'loans.id', '=', 'loan_payment_dates.loan_id')
-                        ->leftJoin('payment_dates', 'payment_dates.id', '=', 'loan_payment_dates.payment_date_id')
+                        ->leftJoin('payments', function($join){
+                            $join->on('loans.id', '=', 'payments.paymentable_id');
+                            $join->on('payments.paymentable_type', 'like', DB::raw("'%Loan'"));
+                        })
+                        ->leftJoin('payment_dates', 'payment_dates.id', '=', 'payments.payment_date_id')
                         ->selectRaw("
                                     CONCAT('row_', loans.id) as DT_RowId,
-                                    CONCAT(lenders.first_name, ' ' , lenders.last_name, '(', codename, ')') as lender,
-                                    codename,
+                                    " . $lender  . ",
+                                    lenders.codename,
                                     CONCAT(members.first_name, ' ' , members.last_name) AS member,
-                                    total_amount, 
+                                    FORMAT(total_amount,2, 'de_DE') as total_amount, 
                                     months_to_pay, 
                                     loans.created_at, 
                                     loans.updated_at, 
                                     amount_per_term,
-                                    SUM(loan_payment_dates.amount) AS paid,
-                                    total_amount - SUM(loan_payment_dates.amount) AS balance, 
+                                    SUM(IF(payments.month_day > 0, payments.amount, 0)) AS paid,
+                                    total_amount - SUM(IF(payments.month_day > 0, payments.amount, 0)) AS balance, 
                                     '' as end_date")
                         // ->where("is_approved", 1)
                         ->groupBy("loans.id")
@@ -250,9 +296,11 @@ class DatatablesController extends Controller
                             $join->on('payment_dates.order_id', '>=', 'loans.starts_at');
                             $join->on('payment_dates.order_id', '<', \DB::raw('loans.starts_at + months_to_pay* 2'));
                         })
-                        ->leftJoin('loan_payment_dates', function($join){
-                            $join->on('loans.id', '=', 'loan_payment_dates.loan_id');
-                            $join->on('payment_dates.id', '=', 'loan_payment_dates.payment_date_id');
+                        ->leftJoin('payments', function($join){
+                            $join->on('loans.id', '=', 'payments.paymentable_id');
+                            $join->on('payments.paymentable_type', 'like', DB::raw("'%Loan'"));
+                            $join->on('payment_dates.month_day', '=', 'payments.month_day');
+                            
                         })
                         ->selectRaw("loans.id,                                
                                     CONCAT(lenders.first_name, ' ' , lenders.last_name, '(', codename, ')') AS lender,
@@ -260,8 +308,9 @@ class DatatablesController extends Controller
                                     starts_at,
                                     months_to_pay, 
                                     payment_dates.id AS pdid,
-                                    month_day, 
-                                    amount
+                                    payment_dates.month_day, 
+                                    ifnull(amount,0) as amount
+                                
                                     ")
                         ->where('loans.id', '=', $loan_id)
                         ->orderBy('loans.id', 'order_id')
@@ -274,6 +323,31 @@ class DatatablesController extends Controller
         return Datatables::of($loans)->rawColumns($raw_columns)->make(true);
         // return Response::json(Datatables::of($loans)->rawColumns($raw_columns)->make(true));
     }
+
+    /**
+     * Members contribution displayed in profile
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getProfileContribution()
+    {
+        $payments = Auth::user()->member->payments;
+       
+        return Datatables::of($payments)->make(true);
+    }
+
+    /**
+     * Lenders payment displayed in members (edit)profile 
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getLenderPayment($id)
+    {
+        $payments = Loan::find($id)->payments;
+       
+        return Datatables::of($payments)->make(true);
+    }
+    
   
 
 

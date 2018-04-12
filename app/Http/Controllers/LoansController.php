@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Lender;
 use App\Loan;
+use App\Payment;
 use App\LoanPaymentDate;
 use App\PaymentDate;
 use Illuminate\Http\Request;
@@ -11,6 +12,60 @@ use Response;
 use Illuminate\Support\Facades\Input;
 class LoansController extends Controller
 {
+
+    public function index()
+    {
+        return view('pages/loans');
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $loan = Loan::find($id);
+        $data['id']   = $id;
+        $data['first_name'] = $loan->lender->first_name;
+        $data['last_name']  = $loan->lender->last_name;
+        $data['codename']   = $loan->lender->codename;
+        $data['is_member']   = $loan->lender->is_member;
+        $data['email']   = "";
+        $data['phone']      = $loan->lender->phone;
+        $data['amount']     = $loan->total_amount;
+        
+        pr($data);
+        return view('pages/members_edit', $data);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $input  = Input::all();
+        $loan   = Loan::find($id);
+
+        $loan->lender->first_name = $input['first_name'];
+        $loan->lender->last_name = $input['last_name'];
+        $loan->lender->codename = $input['codename'];
+        $loan->lender->email = $input['email'];
+        $loan->lender->phone = $input['phone'];
+        $loan->lender->is_member = isset($input['is_member']) && $input['is_member']  == 1 ? 1 : 0;
+        $loan->lender->save();
+
+        $loan->total_amount = $input['amount'];
+        $loan->save();
+
+        return redirect('loans/'.$id.'/edit');
+    }
+
     public function getMembers(){
     	$members = Member::all()->toArray();
     	$result['results'] = $members;
@@ -21,7 +76,6 @@ class LoansController extends Controller
     	};
 
     	$result['results'] = array_map($data_map, $members);
-
     	
     	return Response::json($result);
     }
@@ -74,26 +128,35 @@ class LoansController extends Controller
 
     }
 
+    
+
     public function updatePaymentRow(){
         
         $input = Input::all();
 
-        $payment_date_id = explode('_', $input['name'])[1];
+        $month_day = explode('_', $input['name'])[1];
         $amount = $input['value'];
         $loan_id = $input['pk'];
 
-        // $results = LoanPaymentDate::where([
-        //             'loan_id', '=', $loan_id,
-        //             'payment_date_id', '=', $payment_date_id
-        //             ])->get();
+
+        // $condition =['loan_id' => $loan_id,'payment_date_id'=> $payment_date_id];
+        // $data = $condition;
+        // $data['amount'] = $amount;
+        // print_r($condition);
+        // LoanPaymentDate::updateOrCreate($condition, $data );
+
+        $data['paymentable_id'] = $loan_id;
+        $data['paymentable_type'] = 'App\Loan';
+        $data['month_day'] = $month_day;
         
-
-        $condition =['loan_id' => $loan_id,'payment_date_id'=> $payment_date_id];
-        $data = $condition;
+        $condition = $data; // don't include amount in condition
+        
         $data['amount'] = $amount;
-        print_r($condition);
 
-        LoanPaymentDate::updateOrCreate($condition, $data );
+        Payment::updateOrCreate($condition, $data );
+
+
+        
 
         
         // $lpd->loan_id = $loan_id;

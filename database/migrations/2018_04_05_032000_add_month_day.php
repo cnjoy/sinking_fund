@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPaymentTypeColumn extends Migration
+class AddMonthDay extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,7 @@ class AddPaymentTypeColumn extends Migration
     public function up()
     {
         Schema::table('payments', function (Blueprint $table) {
-            
-            $table->integer('person_id')->after('id');
-            $table->enum('person_type', ['member', 'lender'])->default('member')->after('person_id');
-           
+            $table->string('month_day', 10)->after('amount');
         });
     }
 
@@ -29,8 +26,8 @@ class AddPaymentTypeColumn extends Migration
     public function down()
     {
         Schema::table('payments', function (Blueprint $table) {
-            $table->dropColumn('person_id','person_type');
-
+            $table->dropColumn('month_day');
         });
+      
     }
 }

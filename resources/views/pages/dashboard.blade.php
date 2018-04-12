@@ -11,7 +11,7 @@ Dashboard
 			<span class="info-box-icon bg-aqua"><i class="fa fa-money"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Available Cash</span>
-				<span class="info-box-number">1,410</span>
+				<span class="info-box-number">{{ $available_cash }}</span>
 			</div>
 			<!-- /.info-box-content -->
 		</div>
@@ -23,7 +23,7 @@ Dashboard
 			<span class="info-box-icon bg-green"><i class="fa fa-users"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Total Shares</span>
-				<span class="info-box-number">410</span>
+				<span class="info-box-number">{{ $total_shares }}</span>
 			</div>
 			<!-- /.info-box-content -->
 		</div>
@@ -35,7 +35,7 @@ Dashboard
 			<span class="info-box-icon bg-yellow"><i class="fa fa-list-alt"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">No. of Loans</span>
-				<span class="info-box-number">1</span>
+				<span class="info-box-number">{{ $loan_count }}</span>
 			</div>
 			<!-- /.info-box-content -->
 		</div>
@@ -47,7 +47,7 @@ Dashboard
 			<span class="info-box-icon bg-red"><i class="fa fa-ruble "></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Collection/payday</span>
-				<span class="info-box-number">27,000</span>
+				<span class="info-box-number">{{ $collection_per_payday }}</span>
 			</div>
 			<!-- /.info-box-content -->
 		</div>
@@ -58,7 +58,7 @@ Dashboard
 		<!-- small box -->
 		<div class="small-box bg-aqua">
 			<div class="inner">
-				<h3>500.00</h3>
+				<h3>{{ $deposit }}</h3>
 				<p>Your Deposit</p>
 			</div>
 			<div class="icon">
@@ -72,7 +72,7 @@ Dashboard
 		<!-- small box -->
 		<div class="small-box bg-green">
 			<div class="inner">
-				<h3>505.00</h3>
+				<h3>{{ $fund_value }}</h3>
 				<p>Your Fund Value</p>
 			</div>
 			<div class="icon">
@@ -86,7 +86,7 @@ Dashboard
 		<!-- small box -->
 		<div class="small-box bg-yellow">
 			<div class="inner">
-				<h3>11,000</h3>
+				<h3>{{ $target_savings }}</h3>
 				<p>Target Savings</p>
 			</div>
 			<div class="icon">
@@ -100,7 +100,7 @@ Dashboard
 		<!-- small box -->
 		<div class="small-box bg-red">
 			<div class="inner">
-				<h3>11,505</h3>
+				<h3>{{ $expected_amount }}</h3>
 				<p>Expected Amount</p>
 			</div>
 			<div class="icon">
@@ -117,12 +117,12 @@ Dashboard
 			<span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Total Collection</span>
-				<span class="info-box-number">15,200</span>
+				<span class="info-box-number">{{ $total_collection['amount'] }}</span>
 				<div class="progress">
-					<div class="progress-bar" style="width: 50%"></div>
+					<div class="progress-bar" style="width: {{ $total_collection['percent'] }}%"></div>
 				</div>
 				<span class="progress-description">
-				100% of expected amount
+				{{ $total_collection['percent'] }}% of expected amount
 				</span>
 			</div>
 			<!-- /.info-box-content -->
@@ -133,12 +133,12 @@ Dashboard
 			<span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Total Loans</span>
-				<span class="info-box-number">15,000</span>
+				<span class="info-box-number">{{ $total_loan['amount'] }}</span>
 				<div class="progress">
-					<div class="progress-bar" style="width: 90%"></div>
+					<div class="progress-bar" style="width: {{ $total_loan['percent'] }}%"></div>
 				</div>
 				<span class="progress-description">
-				90% of collected amount
+				{{ $total_loan['percent'] }}% of collected amount
 				</span>
 			</div>
 			<!-- /.info-box-content -->
@@ -149,12 +149,12 @@ Dashboard
 			<span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Total Payments</span>
-				<span class="info-box-number">1,000</span>
+				<span class="info-box-number">{{ $total_payment['amount'] }}</span>
 				<div class="progress">
-					<div class="progress-bar" style="width: 20%"></div>
+					<div class="progress-bar" style="width: {{ $total_payment['percent'] }}%"></div>
 				</div>
 				<span class="progress-description">
-				10% of expected amount
+				{{ $total_payment['percent'] }}% of expected amount
 				</span>
 			</div>
 			<!-- /.info-box-content -->
