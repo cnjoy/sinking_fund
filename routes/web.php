@@ -20,10 +20,10 @@ Route::get('/test', 'testController@index');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/', function () {
-        return view('home');
-    });
-    
+    // Route::get('/', function () {
+    //     return view('dashboard');
+    // });
+    Route::get('/', 'MembersController@dashboard');
     Route::get('/profile', 'MembersController@profile')->name('profile');
     // Route::get('/members', function () {
     //     return view('pages/members');
