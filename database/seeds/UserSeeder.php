@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         //get 25 records starting from the 11th row
         $stmt = (new Statement())
             ->offset(0)
-            ->limit(20)
+            ->limit(26)
         ;
 
         $records = $stmt->process($csv);
@@ -28,9 +28,9 @@ class UserSeeder extends Seeder
              \DB::table('users')->insert(
                 array(
                     'name' => $row['name'],
-                    'active' => $row['active'],
-                    'amount' => $row['amount'],
-                    'shares' => $row['shares'],
+                    // 'active' => $row['active'],
+                    // 'amount' => $row['amount'],
+                    // 'shares' => $row['shares'],
                     'password' => $row['password'],
                     'email' => $row['email'],
                 ));

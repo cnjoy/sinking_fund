@@ -1,27 +1,27 @@
-name,active,amount,shares,password,email
-Joy Neri,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo42,JoyNeri1@email.com
-Nina Alinsug,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo43,NinaAlinsug1@email.com
-Ailyn Calamohoy,1,500,1,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo44,AilynCalamohoy1@email.com
-Ann Margaret Herradura,1,2500,5,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo45,AnnMargaretHerradura1@email.com
-Anna  Sarzata,1,500,1,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo46,AnnaSarzata1@email.com
-Arnel ,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo47,Arnel1@email.com
-Cedie  Mahusay,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo48,CedieMahusay1@email.com
-Darlene Grace Padur,1,2000,4,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo49,DarleneGracePadur1@email.com
-Erlinda Diango,1,2000,4,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo50,ErlindaDiango1@email.com
-Reymond ,1,2000,4,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo51,Reymond1@email.com
-Henley  Tabal,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo52,HenleyTabal1@email.com
-Ion Mae Escalante,1,500,1,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo53,IonMaeEscalante1@email.com
-Jasmin Lavares,1,2500,5,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo54,JasminLavares1@email.com
-Jenjen Gomez,1,2000,4,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo55,JenjenGomez1@email.com
-Johanna Fe Ramos,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo56,JohannaFeRamos1@email.com
-Lyra May Aguilar,1,1500,3,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo57,LyraMayAguilar1@email.com
-Marco Paulo Diala,1,1500,3,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo58,MarcoPauloDiala1@email.com
-Marianne Jimenez,1,1500,3,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo59,MarianneJimenez1@email.com
-Reymond Buenaviaje,1,2500,5,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo60,ReymondBuenaviaje1@email.com
-Rheanne Mae Princesa,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo61,RheanneMaePrincesa1@email.com
-Richard Ebrado,1,2500,5,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo62,RichardEbrado1@email.com
-Richard Lapesigue,1,2000,4,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo63,RichardLapesigue1@email.com
-Sam Herradura,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo64,SamHerradura1@email.com
-Tetchie  Lopez,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo65,TetchieLopez1@email.com
-Trylle Goodie De Leon,1,1000,2,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo66,TrylleGoodieDeLeon1@email.com
-Zenica Joy Limpangog,1,1500,3,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo67,ZenicaJoyLimpangog1@email.com
+name,password,email
+Joy Neri,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo42,JoyNeri1@email.com
+Nina Alinsug,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo43,NinaAlinsug1@email.com
+Ailyn Calamohoy,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo44,AilynCalamohoy1@email.com
+Ann Margaret Herradura,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo45,AnnMargaretHerradura1@email.com
+Anna  Sarzata,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo46,AnnaSarzata1@email.com
+Arnel ,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo47,Arnel1@email.com
+Cedie  Mahusay,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo48,CedieMahusay1@email.com
+Darlene Grace Padur,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo49,DarleneGracePadur1@email.com
+Erlinda Diango,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo50,ErlindaDiango1@email.com
+Reymond ,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo51,Reymond1@email.com
+Henley  Tabal,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo52,HenleyTabal1@email.com
+Ion Mae Escalante,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo53,IonMaeEscalante1@email.com
+Jasmin Lavares,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo54,JasminLavares1@email.com
+Jenjen Gomez,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo55,JenjenGomez1@email.com
+Johanna Fe Ramos,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo56,JohannaFeRamos1@email.com
+Lyra May Aguilar,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo57,LyraMayAguilar1@email.com
+Marco Paulo Diala,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo58,MarcoPauloDiala1@email.com
+Marianne Jimenez,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo59,MarianneJimenez1@email.com
+Reymond Buenaviaje,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo60,ReymondBuenaviaje1@email.com
+Rheanne Mae Princesa,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo61,RheanneMaePrincesa1@email.com
+Richard Ebrado,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo62,RichardEbrado1@email.com
+Richard Lapesigue,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo63,RichardLapesigue1@email.com
+Sam Herradura,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo64,SamHerradura1@email.com
+Tetchie  Lopez,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo65,TetchieLopez1@email.com
+Trylle Goodie De Leon,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo66,TrylleGoodieDeLeon1@email.com
+Zenica Joy Limpangog,$2y$10$wv0WgHGLlfh62LtNACyBsumoKKwyldO3EoXwqr66ucQleRebvNo67,ZenicaJoyLimpangog1@email.com
