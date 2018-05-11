@@ -8,6 +8,7 @@ use App\Payment;
 use App\Loan;
 use App\MemberPaymentDate;
 use App\PaymentDate;
+use App\ViewMember;
 use Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,12 @@ class MembersController extends MyBaseController
     
     public function index()
     {
+        $members = ViewMember::all();
+        // pr($members);
+        // foreach($members as $x => $member)
+        // {
+
+        // }
         return view('pages/members');
     }
 

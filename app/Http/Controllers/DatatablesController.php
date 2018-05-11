@@ -11,6 +11,7 @@ use App\User;
 use App\MemberPaymentDate;
 use Yajra\Datatables\Datatables;
 use App\Http\Controllers;
+use App\ViewMember;
 use DB;
 use Response;
 use Illuminate\Support\Facades\Auth;
@@ -89,6 +90,42 @@ class DatatablesController extends Controller
         }
         return Datatables::of($final)->rawColumns($raw_columns)->make(true);
     }
+    public function membersData2(){
+        // $result = ViewMember::all();
+        // return $result;
+        $payment_date = PaymentDate::all()->pluck('month_day')->toArray();
+        
+        $members = DB::table('members_view')
+                ->selectRaw("*,CONCAT('row_', id) as DT_RowId, id as member_id,
+                CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
+                ")->get()->toArray();
+
+// pr($members);exit;
+        foreach($members as $x => $member )
+        {
+            foreach($payment_date as $pd)
+            {
+                // pr($member->{$pd} );
+                if(isset($member->{$pd} ) && $member->{$pd} > 0 ) {
+                    pr('-----------');
+                    $members[$x]->$pd = 'done';
+                    
+                }else{
+                    
+                }
+            }
+            
+        }
+
+pr(current($members));
+        
+        pr(array_column($members, 'first_name'));
+        // if( !empty($members) ) {
+        //     $raw_columns = array_keys(current(object_to_array($members)));
+        // }
+pr(array_keys(object_to_array(current($members))));
+        return $members;
+    }
 
     /**
      * Process datatables ajax request.
@@ -100,6 +137,12 @@ class DatatablesController extends Controller
         // <i class="fa fa-check text-success text-center"></i>
         
         $done = 0; $raw_columns = [];
+        // $members1 = ViewMember::all();
+        // // pr($members);
+        // foreach($members as $x => $member)
+        // {
+
+        // }
         if( Auth::user()->isAdmin() ) 
         {
             $fields = "IF(MAX(CASE WHEN payments.month_day='01/16' THEN payments.amount END) > 0, '<input type=\"checkbox\" value=\"01/16\" checked />',  '<input type=\"checkbox\" value=\"01/16\"  />') as '01/16',
@@ -179,8 +222,29 @@ class DatatablesController extends Controller
                             ->groupBy("members.id")
                             ->get()->toArray();
         $raw_columns = [];
+        $members = DB::table('members_view')
+        ->selectRaw("*,monthly_due as amount, CONCAT('row_', id) as DT_RowId, id as member_id,
+        CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
+        ")->get()->toArray();
+
+        PaymentDate::all()->pluck('month_day')->toArray();
+        $payment_date = PaymentDate::all()->pluck('month_day')->toArray();
+        foreach($members as $x => $member )
+        {
+            foreach($payment_date as $pd)
+            {
+                if(isset($member->{$pd} ) && $member->{$pd} > 0 ) {
+                    $members[$x]->$pd = 'done';
+                    
+                }
+            }
+            
+        }
+
+
+
         if( !empty($members) ) {
-            $raw_columns = array_keys(current($members));
+            $raw_columns = array_keys(object_to_array(current($members)));
         }
         
 

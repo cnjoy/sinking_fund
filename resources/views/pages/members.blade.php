@@ -9,6 +9,7 @@ Members
             <tr>
                 <th>Member (head)</th>
                 <th>Amount/mo</th>
+                <th>Total Paid</th>
                 <th>01/16</th>
                 <th>02/01</th>
                 <th>02/16</th>
@@ -51,6 +52,7 @@ $(function() {
         columns: [
             { data: 'fullname', name: 'fullname'},
             { data: 'amount', name: 'amount', class:"td-amount"},
+            { data: 'total_paid', name: 'total_paid', class:"td-amount"},
             { data: '01/16', name: '01/16', class: 'text-center'},
             { data: '02/01', name: '02/01', class: 'text-center'},
             { data: '02/16', name: '02/16', class: 'text-center'},

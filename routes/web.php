@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/submit-loan', ['as' => 'form_url', 'uses' => 'LoansController@add']);
     Route::get('/datatables', 'DatatablesController@getIndex');
     Route::get('/datatables/members', 'DatatablesController@membersData');
+    Route::get('/datatables/members2', 'DatatablesController@membersData2');
     Route::get('/datatables/users-data', 'DatatablesController@usersData');
     Route::get('/datatables/test', 'DatatablesController@test');
     Route::get('/datatables/lenders', 'DatatablesController@lendersData');
