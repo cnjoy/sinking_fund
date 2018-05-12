@@ -24,3 +24,10 @@ if (! function_exists('array_to_object')) {
         return (object) $array;
     }
 }
+
+if (! function_exists('compute_monthly_due')) {
+    function compute_monthly_due($amount, $terms) {
+        $interest = $amount * $_ENV['INTEREST_PER_MONTH'] * $terms;
+        return ($amount + $interest)/$terms;
+    }
+}

@@ -7,6 +7,7 @@ use App\Loan;
 use App\Payment;
 use App\LoanPaymentDate;
 use App\PaymentDate;
+use Mail;
 use Illuminate\Http\Request;
 use Response;
 use Illuminate\Support\Facades\Input;
@@ -105,10 +106,11 @@ class LoansController extends Controller
             'last_name' => 'required',
             'codename' => 'required|unique:lenders',
             'guaranter' => 'required',
-            'phone' => 'required',
+            // 'phone' => 'required',
             'amount' => 'required',
             'terms' => 'required',
         ]);
+
 
         $lender = new Lender();
         $lender->first_name = $request->first_name;
@@ -124,6 +126,27 @@ class LoansController extends Controller
         $loan->total_amount = $request->amount;
         $loan->months_to_pay = $request->terms;
         $loan->save();
+        
+        $monthly_due = compute_monthly_due($request->amount, $request->terms);
+
+        $data = array(
+            'name' => $request->first_name . ' ' . $request->last_name,
+            'codename' => $request->codename,
+            'amount' => $request->amount,
+            'terms' => $request->terms,
+            'monthly_due' => $monthly_due,
+        );
+
+        Mail::send('emails.application', $data, function ($message) {
+            
+            $message->from('codevsf@gmail.com', 'Codev Sinking Fund');
+    
+            $message->to('cieliton@codev.com')->subject('Loan Application');
+    
+        });
+        
+
+        
         return redirect('/apply-loan');
 
     }

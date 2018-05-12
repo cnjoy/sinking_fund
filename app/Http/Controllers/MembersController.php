@@ -189,6 +189,7 @@ class MembersController extends MyBaseController
         
         $condition = $data;
         if( $input['remove'] ) {
+            unset($condition['amount']);
             Payment::whereArray($condition )->delete();
             
         }else {
