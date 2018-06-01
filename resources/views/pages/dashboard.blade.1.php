@@ -72,7 +72,7 @@ Dashboard
 			<div class="info-box-content">
 				<span class="info-box-text">Available Cash</span>
 				<!-- <span class="info-box-number">{{ $available_cash }}</span> -->
-				<span class="info-box-number">{{ $available_cash }}</span>
+				<span class="info-box-number">TBD</span>
 			</div>
 			<!-- /.info-box-content -->
 		</div>
@@ -96,7 +96,7 @@ Dashboard
 			<span class="info-box-icon bg-yellow"><i class="fa fa-list-alt"></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">No. of Loans</span>
-				<span class="info-box-number"></span>
+				<span class="info-box-number">{{ $loan_count }}</span>
 			</div>
 			<!-- /.info-box-content -->
 		</div>
@@ -116,41 +116,83 @@ Dashboard
 	</div>
 	
 </div>
-
 <div class="row">
-	<div class="col-md-6">
-		<div class="box box-default">
-			<div class="box-header">
-				<h3 class="box-title">Summary</h3>
+	<div class="col-md-3">
+		<!-- Info Boxes Style 2 -->
+		<div class="info-box bg-yellow">
+			<span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+			<div class="info-box-content">
+				<span class="info-box-text">Total Collection</span>
+				<span class="info-box-number">{{ $total_collection['amount'] }}</span>
+				<div class="progress">
+					<div class="progress-bar" style="width: {{ $total_collection['percent'] }}%"></div>
+				</div>
+				<span class="progress-description">
+				{{ $total_collection['percent'] }}% of expected amount
+				</span>
 			</div>
-			<div class="box-body">
-				<table class="table table-border">
-					<tr>
-						<th></th>
-						<th>Amount</th>
-					</tr>
-					<tr>
-						<td>Total Collection</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Total Interest</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Cash On Hand</td>
-						<td></td>
-					</tr>
-					<tr>
-						<td>Loan Balance</td>
-						<td></td>
-					</tr>
-				</table>
-			</div>
+			<!-- /.info-box-content -->
 		</div>
 	</div>
+	<div class="col-md-3">
+		<!-- /.info-box -->
+		<div class="info-box bg-red">
+			<span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+			<div class="info-box-content">
+				<span class="info-box-text">Total Loans</span>
+				<span class="info-box-number">{{ $total_loan['amount'] }}</span>
+				<div class="progress">
+					<div class="progress-bar" style="width: {{ $total_loan['percent'] }}%"></div>
+				</div>
+				<span class="progress-description">
+				{{ $total_loan['percent'] }}% of collected amount
+				</span>
+			</div>
+			<!-- /.info-box-content -->
+		</div>
+	</div>
+	<div class="col-md-3">	
+		<!-- /.info-box -->
+		<div class="info-box bg-green">
+			<span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+			<div class="info-box-content">
+				<span class="info-box-text">Total Payments</span>
+				<span class="info-box-number">{{ $total_payment['amount'] }}</span>
+				<div class="progress">
+					<div class="progress-bar" style="width: {{ $total_payment['percent'] }}%"></div>
+				</div>
+				<span class="progress-description">
+				{{ $total_payment['percent'] }}% of expected amount
+				</span>
+			</div>
+			<!-- /.info-box-content -->
+		</div>
+	</div>	
+
+	<div class="col-md-3">	
+		<!-- /.info-box -->
+		<div class="info-box bg-blue">
+			<span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+			<div class="info-box-content">
+				<span class="info-box-text">Total Cash On Hand</span>
+				<span class="info-box-number">{{ $total_payment['amount'] }}</span>
+				<div class="progress">
+					<div class="progress-bar" style="width: {{ $total_payment['percent'] }}%"></div>
+				</div>
+				<span class="progress-description">
+				{{ $total_payment['percent'] }}% of expected amount
+				</span>
+			</div>
+			<!-- /.info-box-content -->
+		</div>
+
+		
+	</div>
+		
+		<!-- /.box -->
 </div>
 
+<!-- /.row -->
 
 <!-- /.content -->
 @stop

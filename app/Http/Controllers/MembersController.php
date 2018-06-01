@@ -39,9 +39,6 @@ class MembersController extends MyBaseController
         $member = $this->member;
         $member_id = $member->id;
 
-        // $member_payments = $this->member_payments;
-        
-
         $collection_per_payday = Member::all()->sum('amount');
         $loan_count = Loan::count();
 

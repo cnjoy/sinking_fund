@@ -28,11 +28,11 @@
 	            <i class="fa fa-users"></i> <span>Members</span> <i class="fa fa-angle-left pull-right"></i>
           	</a>
         </li>
-        <li class="">
+        <!-- <li class="">
 			<a href="/loans">
 	            <i class="fa fa-credit-card"></i> <span>Loans</span> <i class="fa fa-angle-left pull-right"></i>
           	</a>
-        </li>
+        </li> -->
         <!-- <li class="">
 			<a href="/forecast">
 	            <i class="fa fa-area-chart"></i> <span>Forecast</span> <i class="fa fa-angle-left pull-right"></i>

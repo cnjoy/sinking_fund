@@ -139,7 +139,7 @@ pr(array_keys(object_to_array(current($members))));
       
         $members = DB::table('members_view')
                     ->selectRaw("*, monthly_due as amount, CONCAT('row_', id) as DT_RowId, id as member_id,
-                                CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
+                                CONCAT(first_name,', ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
                                 ")
                     ->get()
                     ->toArray();
@@ -164,6 +164,7 @@ pr(array_keys(object_to_array(current($members))));
                         $members[$x]->$pd = '';
                     }
                 }
+                // $members[$x]->total_paid = number_format((int)$member->total_paid);
             }
         }
 
