@@ -70,7 +70,7 @@ Dashboard
 		<div class="info-box">
 			<span class="info-box-icon bg-aqua"><i class="fa fa-money"></i></span>
 			<div class="info-box-content">
-				<span class="info-box-text">Available Cash</span>
+				<span class="info-box-text">Total Collection</span>
 				<!-- <span class="info-box-number">{{ $available_cash }}</span> -->
 				<span class="info-box-number">{{ $available_cash }}</span>
 			</div>
@@ -118,32 +118,35 @@ Dashboard
 </div>
 
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-9">
 		<div class="box box-default">
 			<div class="box-header">
 				<h3 class="box-title">Summary</h3>
 			</div>
 			<div class="box-body">
-				<table class="table table-border">
+				<table class="table table-bordered">
 					<tr>
 						<th></th>
 						<th>Amount</th>
+						<th style="vertical-align : middle;text-align:center;">Total</th>
 					</tr>
 					<tr>
 						<td>Total Collection</td>
-						<td></td>
+						<td>TBD</td>
+						<th rowspan="2" style="vertical-align : middle;text-align:center;">TBD</th>
 					</tr>
 					<tr>
 						<td>Total Interest</td>
-						<td></td>
+						<td>TBD</td>
 					</tr>
 					<tr>
-						<td>Cash On Hand</td>
-						<td></td>
+						<td>Total Cash On Hand</td>
+						<td>TBD</td>
+						<th rowspan="2" style="vertical-align : middle;text-align:center;">TBD</th>
 					</tr>
 					<tr>
-						<td>Loan Balance</td>
-						<td></td>
+						<td>Total Loan Balance</td>
+						<td>TBD</td>
 					</tr>
 				</table>
 			</div>

@@ -27,106 +27,7 @@ class DatatablesController extends Controller
         return view('pages.members');
     }
 
-    /**
-     * Process datatables ajax request.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function membersData_backup()
-    {
-        $dates = PaymentDate::select(DB::raw("concat(str_month,' ' , int_day) as date, id"))
-                            ->get()->toArray();
-        $dates = array_column($dates, 'date', 'id');
-        $month_index= array_flip($dates);
-        $month_index = array_fill_keys(array_keys($month_index), '');
-        
-        $members = Member::leftJoin('member_payment_dates', 'members.id', '=', 'member_payment_dates.member_id')
-                        ->leftJoin('payment_dates', 'payment_dates.id', '=', 'member_payment_dates.payment_date_id')
-                        ->selectRaw("members.id as member_id, 
-                                    first_name, last_name, 
-                                    CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname,
-                                    members.amount, str_month, 
-                                    int_day,
-                                    CONCAT(str_month, ' ' , int_day) as term,
-                                    payment_date_id")
-                        ->get()->toArray();
-
-        $final = []; $done = 0; $raw_columns = [];
-
-        foreach($members as $key=> $member){
-            $member_id = $member['member_id'];
-            
-
-            if( !isset($final[$member_id]) )
-            {
-                $final[$member_id] = $month_index;
-                $final[$member_id]['fullname'] = $member['fullname'];
-               
-    
-            }
-
-            
-            $month = $member['term'];
-            $payment_date_id = isset($month_index[$month]) ? $month_index[$month] : '0';
-         
-            if( isset($month_index[$month]) ){
-                $final[$member_id]['amount'] = isset($final[$member_id]['amount']) ? $final[$member_id]['amount'] + $member['amount'] : $member['amount'] ;
-                $final[$member_id][$month] = '<i class="fa fa-check text-success text-center"></i>';
-                // $final[$member_id][$month] = $member['amount'];
-                
-            }else{
-                $final[$member_id]['amount'] = isset($final[$member_id]['amount']) ? $final[$member_id]['amount'] + $member['amount'] : 0 ;
-                $final[$member_id][$month] = '<input type=\"checkbox\" value="" />checked>';
-            }
-            
-            // get the column for once
-            // to be used to escape tags in datatable
-            if( !$done )
-            {
-                $raw_columns = array_keys($member);
-                $raw_columns = array_merge($dates, $raw_columns);
-            }
-
-        }
-        return Datatables::of($final)->rawColumns($raw_columns)->make(true);
-    }
-    public function membersData2(){
-        // $result = ViewMember::all();
-        // return $result;
-        $payment_date = PaymentDate::all()->pluck('month_day')->toArray();
-        
-        $members = DB::table('members_view')
-                ->selectRaw("*,CONCAT('row_', id) as DT_RowId, id as member_id,
-                CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
-                ")->get()->toArray();
-
-// pr($members);exit;
-        foreach($members as $x => $member )
-        {
-            foreach($payment_date as $pd)
-            {
-                // pr($member->{$pd} );
-                if(isset($member->{$pd} ) && $member->{$pd} > 0 ) {
-                    pr('-----------');
-                    $members[$x]->$pd = 'done';
-                    
-                }else{
-                    
-                }
-            }
-            
-        }
-
-pr(current($members));
-        
-        pr(array_column($members, 'first_name'));
-        // if( !empty($members) ) {
-        //     $raw_columns = array_keys(current(object_to_array($members)));
-        // }
-pr(array_keys(object_to_array(current($members))));
-        return $members;
-    }
-
+   
     /**
      * Process datatables ajax request.
      *
@@ -139,7 +40,7 @@ pr(array_keys(object_to_array(current($members))));
       
         $members = DB::table('members_view')
                     ->selectRaw("*, monthly_due as amount, CONCAT('row_', id) as DT_RowId, id as member_id,
-                                CONCAT(first_name,', ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
+                                CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
                                 ")
                     ->get()
                     ->toArray();

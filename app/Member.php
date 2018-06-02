@@ -56,13 +56,6 @@ class Member extends Model
     public function getContributions()
     {
 
-        // $payments = DB::table('members')
-
-        // 			->leftJoin('payments', function($join){
-        // 				$join->on('members.id', '=', 'payments.member_id'
-        // 					->where('person_type', '=', "'member'"))
-        // 			})
-        // 		->get();
         $results = DB::select( DB::raw("SELECT p.id AS payment_id, m.id AS member_id,CONCAT(first_name, ' ', last_name, '(', shares, ')') AS fullname,
 										m.amount, CONCAT(str_month, ' ', int_day) AS payment_date
 										FROM members m

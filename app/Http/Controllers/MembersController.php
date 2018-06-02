@@ -19,11 +19,7 @@ class MembersController extends MyBaseController
     public function index()
     {
         $members = ViewMember::all();
-        // pr($members);
-        // foreach($members as $x => $member)
-        // {
-
-        // }
+       
         return view('pages/members');
     }
 
@@ -40,6 +36,7 @@ class MembersController extends MyBaseController
         $member_id = $member->id;
 
         $collection_per_payday = Member::all()->sum('amount');
+        
         $loan_count = Loan::count();
 
         $total_shares = Member::all()->sum('shares');
@@ -64,9 +61,14 @@ class MembersController extends MyBaseController
         // getavailable cash
         $total_payments = $p->getTotalPayments();
         $available_cash = $total_payments-$total_loan;
-
+        
         // get percentage
-        $tc_percentage = round( ($total_collection/$collection_per_payday) * 100 );
+        
+        $collection_per_payday = $collection_per_payday > 0 ? $collection_per_payday : 1;
+        $total_payments = $total_payments > 0 ? $total_payments : 1;
+        $total_loan = $total_loan > 0 ? $total_loan : 1;
+
+        $tc_percentage = round( ($total_collection/$total_loan) * 100 );
         $tl_percentage = round( ($total_loan/$total_payments) * 100);
         $tp_percentage = round( ($total_payment/$total_loan) * 100);
 
@@ -93,50 +95,7 @@ class MembersController extends MyBaseController
         return view('pages/dashboard')->with($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Member $member)
-    {
-        return Response::json($member);
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        // return redirect('profile');
-        pr('test');
-    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -195,5 +154,48 @@ class MembersController extends MyBaseController
        
 
 
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Member $member)
+    {
+        return Response::json($member);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        pr('test');
     }
 }
