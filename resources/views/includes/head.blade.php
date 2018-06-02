@@ -8,6 +8,7 @@
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- Bootstrap 3.3.6 -->
 <!-- <link rel="stylesheet" href="css/bootstrap/css/bootstrap.min.css"> -->
+<link rel="shortcut icon" href="img/logo.png" />
 <link href="{{ asset('css/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" >
 <!-- Font Awesome -->
 <link href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >
@@ -20,8 +21,10 @@
 <link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('css/skins/_all-skins.min.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" >
+<link href="{{ asset('js/plugins/pnotify/pnotify.custom.min.css') }}" rel="stylesheet" type="text/css" >
 
 <script type="text/javascript" src="{{ asset('js/jquery/dist/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/plugins/pnotify/pnotify.custom.min.js') }}"></script>
 <script>
 $(function(){
   $.ajaxSetup({

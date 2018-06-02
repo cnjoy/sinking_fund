@@ -132,7 +132,7 @@ Dashboard
 					</tr>
 					<tr>
 						<td>Total Collection</td>
-						<td>TBD</td>
+						<td>{{ $available_cash }}</td>
 						<th rowspan="2" style="vertical-align : middle;text-align:center;">TBD</th>
 					</tr>
 					<tr>

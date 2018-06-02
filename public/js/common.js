@@ -3,7 +3,28 @@ $(function(){
     
 })
 
-//
+function set_message(status, message)
+{
+    if(status == 'failed' || status == 'error' || status == 0) 
+    {
+        title = 'Oh No!';
+        type = 'error';
+    }else{
+        title = 'Success!';
+        type = 'success';
+    }
+
+    new PNotify({
+        title: title,
+        text: message,
+        type: type,
+        nonblock: {
+            nonblock: true
+        },
+    });
+}
+
+// Add or remove class "active" in sidebar
 function activateSidebarLi()
 {
     var url = window.location.href.split('?');

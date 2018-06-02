@@ -97,7 +97,7 @@ $(function() {
                 type: 'POST',
                 data: options,
                 success: function(data){
-
+                    set_message('success', 'Update done');
                 }
             });
         }else{
