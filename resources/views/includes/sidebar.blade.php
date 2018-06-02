@@ -28,16 +28,16 @@
 	            <i class="fa fa-users"></i> <span>Members</span> <i class="fa fa-angle-left pull-right"></i>
           	</a>
         </li>
-        <li class="">
+        <!-- <li class="">
 			<a href="/loans">
 	            <i class="fa fa-credit-card"></i> <span>Loans</span> <i class="fa fa-angle-left pull-right"></i>
           	</a>
-        </li>
-        <li class="">
+        </li> -->
+        <!-- <li class="">
 			<a href="/forecast">
 	            <i class="fa fa-area-chart"></i> <span>Forecast</span> <i class="fa fa-angle-left pull-right"></i>
           	</a>
-        </li>
+        </li> -->
         <li class="header">ACTION</li>
         <li><a href="#"><i class="fa fa-file-pdf-o text-red"></i> <span>Agreement</span></a></li>
         <li><a href="/calculator"><i class="fa fa-calculator text-yellow"></i> <span>Calculator</span></a></li>

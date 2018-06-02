@@ -8,6 +8,7 @@ use App\Payment;
 use App\Loan;
 use App\MemberPaymentDate;
 use App\PaymentDate;
+use App\ViewMember;
 use Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,12 @@ class MembersController extends MyBaseController
     
     public function index()
     {
+        $members = ViewMember::all();
+        // pr($members);
+        // foreach($members as $x => $member)
+        // {
+
+        // }
         return view('pages/members');
     }
 
@@ -31,9 +38,6 @@ class MembersController extends MyBaseController
         
         $member = $this->member;
         $member_id = $member->id;
-
-        // $member_payments = $this->member_payments;
-        
 
         $collection_per_payday = Member::all()->sum('amount');
         $loan_count = Loan::count();
@@ -182,6 +186,7 @@ class MembersController extends MyBaseController
         
         $condition = $data;
         if( $input['remove'] ) {
+            unset($condition['amount']);
             Payment::whereArray($condition )->delete();
             
         }else {

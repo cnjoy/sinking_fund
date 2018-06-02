@@ -20,27 +20,27 @@
                     <table  border="1" cellpadding="2" cellspacing="0" width="100%">
                         <tr>
                         <td>Name</td>
-                        <td>My Name</td>
+                        <td>{{$name}}</td>
                         </tr>
                         <tr>
                         <td>Codename</td>
-                        <td>Anonymous</td>
+                        <td>{{$codename}}</td>
                         </tr>
                         <tr>
                         <td>Amount</td>
-                        <td>Php 0.00</td>
+                        <td>Php {{ $amount }}</td>
                         </tr>
                         <tr>
                         <td>Months to pay</td>
-                        <td>2</td>
+                        <td>{{$terms}}</td>
                         </tr>
                         <tr>
                         <td>Monthly amortization</td>
-                        <td>Php 0.00</td>
+                        <td>{{$monthly_due}}</td>
                         </tr>
                         <tr>
                         <td>Date applied</td>
-                        <td></td>
+                        <td>{{date('Y-m-d :H:i:s')}}</td>
                         </tr>
                     </table>
                 </td>

@@ -1,41 +1,44 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html lang="{{ app()->getLocale() }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-@section('content')
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- <title>{{ config('app.name', 'SinkingFund') }}</title> -->
+    <title>SinkingFund</title>
+
+    <!-- Styles -->
+    <link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+</head>
 <body class="hold-transition login-page">
     <div class="login-box">
         <div class="login-logo">
-            <a href="/"><b>Sinking</b>Fund</a>
+            <a href="../../index2.html"><b>Sinking</b>Fund</a>
         </div>
+    
         <!-- /.login-logo -->
         <div class="login-box-body">
             <p class="login-box-msg">Sign in to start your session</p>
 
-            <form action="{{ route('login') }}" method="POST">
-                {{ csrf_field() }}
-                @if ($errors->has('email'))
-                    <span class="help-block text-red">
-                        <strong>{{ $errors->first('email') }}</strong>
-                    </span>
-                @endif
+            <form action="../../index2.html" method="post">
                 <div class="form-group has-feedback">
-                <input type="email" name="email"  class="form-control" placeholder="Email">
+                <input type="email" class="form-control" placeholder="Email">
                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                 </div>
-                @if ($errors->has('password'))
-                    <span class="help-block text-red">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
                 <div class="form-group has-feedback">
-                <input type="password"  name="password" class="form-control" placeholder="Password">
+                <input type="password" class="form-control" placeholder="Password">
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                 </div>
                 <div class="row">
                 <div class="col-xs-8">
                     <div class="checkbox icheck">
                     <label>
-                        <input type="checkbox" {{ old('remember') ? 'checked' : '' }}> Remember Me
+                        <input type="checkbox"> Remember Me
                     </label>
                     </div>
                 </div>
@@ -49,7 +52,7 @@
 
            
 
-            <a href="{{ route('password.request') }}">I forgot my password</a><br>
+            <a href="{{ route('login') }}">I forgot my password</a><br>
             <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
 
         </div>
@@ -59,4 +62,4 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
-@endsection
+</html>

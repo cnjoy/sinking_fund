@@ -20,10 +20,10 @@ Route::get('/test', 'testController@index');
 
 Route::group(['middleware' => 'auth'], function(){
     Route::get('/home', 'HomeController@index')->name('home');
-    Route::get('/', function () {
-        return view('home');
-    });
-    
+    // Route::get('/', function () {
+    //     return view('dashboard');
+    // });
+    Route::get('/', 'MembersController@dashboard');
     Route::get('/profile', 'MembersController@profile')->name('profile');
     // Route::get('/members', function () {
     //     return view('pages/members');
@@ -43,6 +43,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::post('/submit-loan', ['as' => 'form_url', 'uses' => 'LoansController@add']);
     Route::get('/datatables', 'DatatablesController@getIndex');
     Route::get('/datatables/members', 'DatatablesController@membersData');
+    Route::get('/datatables/members2', 'DatatablesController@membersData2');
     Route::get('/datatables/users-data', 'DatatablesController@usersData');
     Route::get('/datatables/test', 'DatatablesController@test');
     Route::get('/datatables/lenders', 'DatatablesController@lendersData');
