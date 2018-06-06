@@ -46,7 +46,6 @@ class DatatablesController extends Controller
                     ->toArray();
 
         $payment_date = PaymentDate::all()->pluck('month_day')->toArray();
-       
         foreach($members as $x => $member )
         {
             foreach($payment_date as $pd)
@@ -65,7 +64,7 @@ class DatatablesController extends Controller
                         $members[$x]->$pd = '';
                     }
                 }
-                // $members[$x]->total_paid = number_format((int)$member->total_paid);
+                //  $members[$x]->total_paid =  $member->total_paid > 0 ? money_format((float)$member->total_paid,2): 0;
             }
         }
 

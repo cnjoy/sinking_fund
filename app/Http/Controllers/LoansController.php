@@ -67,11 +67,15 @@ class LoansController extends Controller
         return redirect('loans/'.$id.'/edit');
     }
 
-    public function getMembers(){
-    	$members = Member::all()->toArray();
+    public function getMembers(Request $request){
+        $members = Member::all()->toArray();
+        // if( $request->term ) {
+        //     $members = Member::where('first_name', 'LIKE', '%'.$request->term.'%')->get();
+        // }
     	$result['results'] = $members;
     	$data_map = function ($members){
     		return array(
+                'term' => '',
     			'id' => $members['id'],
     			'text' => $members['first_name'] . ' ' . $members['last_name']);
     	};

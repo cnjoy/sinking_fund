@@ -137,7 +137,7 @@ Dashboard
 					</tr>
 					<tr>
 						<td>Total Interest</td>
-						<td>TBD</td>
+						<td class="thousands">1000</td>
 					</tr>
 					<tr>
 						<td>Total Cash On Hand</td>

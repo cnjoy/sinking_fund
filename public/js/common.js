@@ -1,8 +1,11 @@
 $(function(){
     activateSidebarLi();
+    separateByThousands();
+    
     
 })
 
+// Alert(success/failed) notification after ajax update or so
 function set_message(status, message)
 {
     if(status == 'failed' || status == 'error' || status == 0) 
@@ -50,4 +53,17 @@ function getUrlVars()
         vars[hash[0]] = hash[1];
     }
     return vars;
+}
+//Separate numbers by thousands
+function numberWithCommas(x)
+{
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+function separateByThousands()
+{
+    $('.thousands').each(function(){
+        var text = $(this).text();
+        $(this).text(numberWithCommas(text));
+    });
 }
