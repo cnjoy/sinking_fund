@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
 class MembersController extends MyBaseController
 {
  
+    public function __construct()
+    {
+        parent::__construct();
+    }
     
     public function index()
     {

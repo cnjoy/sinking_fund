@@ -14,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+        // View::share('monthly_amount', (Auth::user()->member->shares * config('constants.amount_per_head')));
     }
 
     /**

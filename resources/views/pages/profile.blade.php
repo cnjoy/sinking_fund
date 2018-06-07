@@ -51,13 +51,13 @@ Profile
 					<div class="col-md-6">
 		    			<div class="form-group">
 				    		{{ Form::label('phone', 'Phone *') }}
-				    		{{ Form::text('phone', Auth::user()->member->phone, array('class' => 'form-control')) }}
+				    		{{ Form::text('phone', $this->member_monthly_amort, array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 					<div class="col-md-6">
 		    			<div class="form-group">
 				    		{{ Form::label('amount', 'Amount') }}
-				    		{{ Form::text('amount', Auth::user()->member->amount, array('class' => 'form-control')) }}
+				    		{{ Form::text('amount', (Auth::user()->member->shares * config('constants.amount_per_head')), array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 
