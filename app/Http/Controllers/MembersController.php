@@ -30,6 +30,7 @@ class MembersController extends MyBaseController
     public function profile()
     {
 
+        // return view('pages/profile',  'App\Http\ViewComposers\MyViewComposer');
         return view('pages/profile');
     }
 

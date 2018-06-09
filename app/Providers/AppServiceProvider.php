@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Providers;
-
+use View;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Auth;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,7 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        // View::share('monthly_amount', (Auth::user()->member->shares * config('constants.amount_per_head')));
+        
+        view()->composer('*', function($view) {
+            $member = Auth::user()->member;
+            $member->monthly_due =  ($member->shares * config('constants.amount_per_head'));
+            $view->with('member', $member);
+        });
     }
 
     /**
