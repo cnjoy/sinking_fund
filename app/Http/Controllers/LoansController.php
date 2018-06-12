@@ -11,6 +11,7 @@ use Mail;
 use Illuminate\Http\Request;
 use Response;
 use Illuminate\Support\Facades\Input;
+
 class LoansController extends Controller
 {
 
@@ -69,18 +70,25 @@ class LoansController extends Controller
 
     public function getMembers(Request $request){
         $members = Member::all()->toArray();
-        // if( $request->term ) {
-        //     $members = Member::where('first_name', 'LIKE', '%'.$request->term.'%')->get();
-        // }
+        if( Input::get('q') ) {
+            // $members = Member::where('first_name', 'LIKE', '%'.Input::get('q').'%')->get()->toArray();
+            // $members = Member::whereRaw('first_name', 'LIKE', '%'.Input::get('q').'%')->get()->toArray();
+
+            $members=  Member::where(function($query){
+                $query->where('first_name', 'LIKE', '%'.Input::get('q').'%')
+                      ->orWhere('last_name', 'LIKE', '%'.Input::get('q').'%');
+            })->get()->toArray();
+        }
     	$result['results'] = $members;
     	$data_map = function ($members){
     		return array(
-                'term' => '',
     			'id' => $members['id'],
     			'text' => $members['first_name'] . ' ' . $members['last_name']);
     	};
-
-    	$result['results'] = array_map($data_map, $members);
+        if( is_array($members) ) {
+            $result['results'] = array_map($data_map, $members);
+        }
+    	
     	
     	return Response::json($result);
     }

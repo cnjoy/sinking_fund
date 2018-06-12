@@ -17,11 +17,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         
-        view()->composer('*', function($view) {
-            $member = Auth::user()->member;
-            $member->monthly_due =  ($member->shares * config('constants.amount_per_head'));
-            $view->with('member', $member);
-        });
     }
 
     /**

@@ -37,7 +37,8 @@ class MembersController extends MyBaseController
     public function dashboard()
     {
         
-        $member = $this->member;
+        // $member = $this->member;
+        $member = Auth::user()->member;
         $member_id = $member->id;
 
         $collection_per_payday = Member::all()->sum('amount');
