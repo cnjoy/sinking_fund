@@ -108,7 +108,7 @@ Dashboard
 			<span class="info-box-icon bg-red"><i class="fa fa-ruble "></i></span>
 			<div class="info-box-content">
 				<span class="info-box-text">Collection/payday</span>
-				<span class="info-box-number">{{ $collection_per_payday }}</span>
+				<span class="info-box-number thousands">{{ $total_shares * config('constants.amount_per_head') }}</span>
 			</div>
 			<!-- /.info-box-content -->
 		</div>

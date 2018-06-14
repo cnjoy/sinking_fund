@@ -3,6 +3,8 @@
 Profile
 @stop
 @section('content')
+<?php  //pr($userz); 
+?>
 <div class="col-md-6">
 	<div class="box box-info ">
 	    <div class="box-header with-border">
@@ -19,13 +21,13 @@ Profile
 			</div>
 		@endif
 
-			{{  Form::open(array('action'=>['MembersController@update', Auth::user()->member->id], 'method' => 'post')) }}
+			{{  Form::open(array('action'=>['MembersController@update', $member->id], 'method' => 'post')) }}
 			{{ method_field('PATCH') }}
 			  	<div class="row">
 		    		<div class="col-md-6">
 		    			<div class="form-group">
 				    		{{ Form::label('first_name', 'First Name *') }}
-				    		{{ Form::text('first_name', Auth::user()->member->first_name, array('class' => 'form-control')) }}
+				    		{{ Form::text('first_name', $member->first_name, array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 		    		<div class="col-md-6">
@@ -33,31 +35,31 @@ Profile
 				    		<!-- <label>Last Name</label>
 				    		<input type="text" class="form-control"/>  -->
 				    		{{ Form::label('last_name', 'Last Name *') }}
-				    		{{ Form::text('last_name', Auth::user()->member->last_name, array('class' => 'form-control')) }}
+				    		{{ Form::text('last_name', $member->last_name, array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 					<div class="col-md-6">
 		    			<div class="form-group">
 				    		{{ Form::label('codename', 'Codename *') }}
-				    		{{ Form::text('codename', Auth::user()->member->codename, array('class' => 'form-control')) }}
+				    		{{ Form::text('codename', $member->codename, array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 					<div class="col-md-6">
 		    			<div class="form-group">
 				    		{{ Form::label('email', 'Email') }}
-				    		{{ Form::text('email', Auth::user()->member->email, array('class' => 'form-control')) }}
+				    		{{ Form::text('email', $member->email, array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 					<div class="col-md-6">
 		    			<div class="form-group">
 				    		{{ Form::label('phone', 'Phone *') }}
-				    		{{ Form::text('phone', Auth::user()->member->phone, array('class' => 'form-control')) }}
+				    		{{ Form::text('phone', $member->phone, array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 					<div class="col-md-6">
 		    			<div class="form-group">
 				    		{{ Form::label('amount', 'Amount') }}
-				    		{{ Form::text('amount', Auth::user()->member->amount, array('class' => 'form-control')) }}
+				    		{{ Form::text('amount', $member->amount_due, array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 
