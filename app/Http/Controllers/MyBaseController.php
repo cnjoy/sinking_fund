@@ -9,9 +9,9 @@ use View;
 
 class MyBaseController extends Controller
 {
-    // protected $member;
+    protected $member;
     // protected $member_payments;
-    // protected $member_monthly_amort;
+    // protected $monthly_due;
 
     public function __construct()
     {
@@ -23,8 +23,11 @@ class MyBaseController extends Controller
     public function init()
     {
         $this->middleware(function ($request, $next) {
-            $member = Auth::user()->member;
-            $member->monthly_due =  ($member->shares * config('constants.amount_per_head'));
+            // $member = Auth::user()->member;
+            // $member->monthly_due =  ($member->shares * config('constants.amount_per_head'));
+
+            // $this->member = $member;
+            // $this->member->monthly_due = $member->monthly_due;
             View::share('member', Auth::user()->member);
             return $next($request);
         });

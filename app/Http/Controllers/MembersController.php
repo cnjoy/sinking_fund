@@ -40,13 +40,15 @@ class MembersController extends MyBaseController
         // $member = $this->member;
         $member = Auth::user()->member;
         $member_id = $member->id;
+        $total_shares = Member::all()->sum('shares');
+        $deposit =   $member->payments->sum('amount');
+        $target_savings = $member->amount_due * config('constants.total_date_count');
 
         $collection_per_payday = Member::all()->sum('amount');
         
         $loan_count = Loan::count();
 
-        $total_shares = Member::all()->sum('shares');
-        $deposit =   $member->payments->sum('amount');
+        
        
         // get fund value
         $total_loan = Loan::all()->sum('total_amount');
@@ -57,6 +59,7 @@ class MembersController extends MyBaseController
         // get target savings and expected amount
         $date_count = PaymentDate::count();
         $target_savings = $member->amount * $date_count;
+        $target_savings = $member->amount_due * config('constants.total_date_count');
         $expected_amount = $target_savings + $interest;
 
         $p = new Payment();
@@ -81,7 +84,7 @@ class MembersController extends MyBaseController
 
 
         $data = [
-                    'deposit' =>  format2($deposit),
+                    'deposit' =>  $deposit,
                     'available_cash' =>  format2($available_cash),
                     'total_shares' =>  $total_shares,
                     'collection_per_payday' =>  format2($collection_per_payday),
@@ -142,10 +145,12 @@ class MembersController extends MyBaseController
             $exp = explode('_', $input['member_id']);
             $member_id = sizeof($exp) > 1 ? $exp[1] : 0;
         }
-       
+        $member = Member::find($member_id);
+        // $member->amount_due;
         $data['paymentable_id'] = $member_id;
         $data['paymentable_type'] = 'App\Member';
-        $data['amount'] = $input['amount'];
+        // $data['amount'] = $input['amount'];
+        $data['amount'] =    $member->amount_due;
         // $data['payment_date_id'] = $input['payment_date_id'];
         $data['month_day'] = $input['month_day'];
         

@@ -9,6 +9,8 @@ return [
     |
     */
 
-    'amount_per_head' => 500
+    'amount_per_head' => 500,
+    'total_date_count' => 22,
+
 
 ];

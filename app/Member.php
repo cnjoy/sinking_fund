@@ -7,6 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Member extends Model
 {
 
+     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = ['amount_due'];
+
+
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -63,6 +71,11 @@ class Member extends Model
 										LEFT JOIN payment_dates pd ON pd.id = p.payment_date_id 
 										ORDER BY m.id") );
         return $results;
+    }
+
+    public function getAmountDueAttribute()
+    {
+        return ($this->shares * config('constants.amount_per_head'));
     }
        
 

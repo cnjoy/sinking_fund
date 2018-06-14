@@ -59,7 +59,7 @@ Profile
 					<div class="col-md-6">
 		    			<div class="form-group">
 				    		{{ Form::label('amount', 'Amount') }}
-				    		{{ Form::text('amount', $member->monthly_due, array('class' => 'form-control')) }}
+				    		{{ Form::text('amount', $member->amount_due, array('class' => 'form-control')) }}
 			    		</div>
 		    		</div>
 
