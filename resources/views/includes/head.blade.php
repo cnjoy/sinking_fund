@@ -13,6 +13,7 @@
 <!-- Font Awesome -->
 <link href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" >
+
 <!-- Select2 -->
 <link href="{{ asset('js/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" >
   <!-- Theme style -->

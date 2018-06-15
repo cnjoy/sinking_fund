@@ -3,8 +3,8 @@
 Members
 @stop
 @section('content')
-<div class="table-container">
-    <table class="table table-bordered" id="members-table">
+<div class="table-container-">
+    <table class="table table-bordered " id="members-table" style="width:100%">
         <thead>
             <tr>
                 <th>Member (head)</th>
@@ -37,6 +37,7 @@ Members
                 
             </tr>
         </thead>
+       
     </table>
 </div>
 @stop
@@ -44,7 +45,10 @@ Members
 @push('scripts')
 <script>
 $(function() {
-    $('#members-table').DataTable({
+    var table = $('#members-table').DataTable({
+        scrollY:        "500px",
+        scrollX:        true,
+        scrollCollapse: true,
         processing: true,
         serverSide: true,
         pageLength: 50, // default records per page
@@ -75,13 +79,13 @@ $(function() {
             { data: '11/01', name: '11/01', class: 'text-center'},
             { data: '11/16', name: '11/16', class: 'text-center'},
             { data: '12/01', name: '12/01', class: 'text-center'},
-
-
            
         ],
+        
         drawCallback: function(){
             separateByThousands();
-        }
+        },
+        fixedColumns:   true,
     });
     $('#members-table').on('click', 'input', function(){
         var checkbox = $(this);

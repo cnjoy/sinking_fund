@@ -10,7 +10,7 @@ Dashboard
 		<!-- small box -->
 		<div class="small-box bg-aqua">
 			<div class="inner">
-				<h3>{{ $deposit }}</h3>
+				<h3 class="thousands">{{ $deposit }}</h3>
 				<p>Your Deposit</p>
 			</div>
 			<div class="icon">

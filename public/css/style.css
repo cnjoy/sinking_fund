@@ -84,3 +84,16 @@ td.details-control {
 tr.details td.details-control {
     background: url('/img/details_close.png') no-repeat center center;
 }
+
+/* [START] Fixes the styling in fixedcolumn bugs. */
+table.dataTable.no-footer.DTFC_Cloned {
+    border-bottom: none !important;
+}
+.dataTables_scrollBody thead tr {
+    visibility: collapse;
+}
+.DTFC_LeftBodyLiner {
+    overflow: hidden;
+
+}
+/* [END] Fixes the styling in fixedcolumn bugs. */
