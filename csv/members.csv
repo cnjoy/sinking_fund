@@ -1,28 +1,28 @@
-last_name,first_name,is_active,shares,user_id,is_admin
-Abuda,Edmondo,1,2,1,0
-Aguilar,Lyra May,1,3,2,0
-Alinsug,Nina,1,6,3,1
-Buenaviaje,Reymond,1,4,4,0
-Calamohoy,Ailyn,1,1,5,0
-Carbonero,Junie,1,1,6,0
-De Leon,Trylle,1,2,7,0
-Diala,Marco Paolo,1,3,8,0
-Diango,Erlinda,1,1,9,0
-Ebrado,Richard,1,1,10,0
-Escalante,Ion,1,1,11,0
-Gomez,Jennifer,1,1,12,0
-Herradura,Ann,1,2,13,0
-Herradura,Samuel,1,2,14,0
-Himaya,Merlinda,1,2,15,0
-Jimenez,Marianne,1,2,16,0
-Lapesigue,Richard,1,4,17,0
-Lavares,Jasmine,1,2,18,0
-Limpangog,Zennica,1,1,19,0
-Lopez,Tetchie,1,2,20,0
-Macapobre,Arnel,1,4,21,0
-Neri,Cielito Joy,1,1,22,1
-Pador,Darlene Grace,1,2,23,0
-Pepito,Peter,1,3,24,0
-Princesa,Rheanne Mae,1,3,25,0
-Ramos,Johanna Fe,1,2,26,0
-Tabal,Henley,1,2,27,0
+last_name,first_name,is_active,shares,user_id
+Abuda,Edmondo,1,2,1
+Aguilar,Lyra May,1,3,2
+Alinsug,Nina,1,6,3
+Buenaviaje,Reymond,1,4,4
+Calamohoy,Ailyn,1,1,5
+Carbonero,Junie,1,1,6
+De Leon,Trylle,1,2,7
+Diala,Marco Paolo,1,3,8
+Diango,Erlinda,1,1,9
+Ebrado,Richard,1,1,10
+Escalante,Ion,1,1,11
+Gomez,Jennifer,1,1,12
+Herradura,Ann,1,2,13
+Herradura,Samuel,1,2,14
+Himaya,Merlinda,1,2,15
+Jimenez,Marianne,1,2,16
+Lapesigue,Richard,1,4,17
+Lavares,Jasmine,1,2,18
+Limpangog,Zennica,1,1,19
+Lopez,Tetchie,1,2,20
+Macapobre,Arnel,1,4,21
+Neri,Cielito Joy,1,1,22
+Pador,Darlene Grace,1,2,23
+Pepito,Peter,1,3,24
+Princesa,Rheanne Mae,1,3,25
+Ramos,Johanna Fe,1,2,26
+Tabal,Henley,1,2,27

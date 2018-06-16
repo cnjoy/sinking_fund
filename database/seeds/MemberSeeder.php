@@ -20,7 +20,7 @@ class MemberSeeder extends Seeder
         //get 25 records starting from the 11th row
         $stmt = (new Statement())
             ->offset(0)
-            ->limit(26)
+            ->limit(30)
         ;
 
         $records = $stmt->process($csv);
