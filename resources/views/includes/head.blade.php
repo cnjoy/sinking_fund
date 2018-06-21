@@ -3,7 +3,7 @@
 <meta name="author" content="Joy">
 <meta name="csrfToken" content="{{ csrf_token() }}">
 
-<title>Joy Neri</title>
+<title>Sinking Fund</title>
 <!-- Tell the browser to be responsive to screen width -->
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 <!-- Bootstrap 3.3.6 -->
