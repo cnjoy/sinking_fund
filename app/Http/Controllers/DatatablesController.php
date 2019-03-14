@@ -38,9 +38,9 @@ class DatatablesController extends Controller
         
         $done = 0; $raw_columns = [];
       
-        $members = DB::table('members_view')
+        $members = DB::table('users_view')
                     ->selectRaw("*, monthly_due as amount, CONCAT('row_', id) as DT_RowId, id as member_id,
-                                CONCAT(first_name,' ', last_name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
+                                CONCAT(name, ' <b class=\"font11\">(',shares, ')</b>') as fullname
                                 ")
                     ->get()
                     ->toArray();
@@ -61,7 +61,7 @@ class DatatablesController extends Controller
                     if( Auth::user()->isAdmin() ) {
                         $members[$x]->$pd = '<input type="checkbox" value="' . $pd . '"   />';
                     }else {
-                        $members[$x]->$pd = '';
+                        $members[$x]->$pd = Auth::user()->id;
                     }
                 }
                 //  $members[$x]->total_paid =  $member->total_paid > 0 ? money_format((float)$member->total_paid,2): 0;
