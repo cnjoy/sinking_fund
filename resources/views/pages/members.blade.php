@@ -40,11 +40,27 @@ Members
        
     </table>
 </div>
+
+<nav class="optionsMenu" style="z-index:1000; position:fixed">
+    <input type="hidden" class="deposit-type">
+    <select class="select-deposit-type">
+        <option value="Cash">Cash</option>
+        <option value="EFT">EFT</option>
+    </select>'
+</nav>
 @stop
 
 @push('scripts')
 <script>
+
 $(function() {
+    editor = new $.fn.dataTable.Editor( '#members-table' );
+
+    // Activate an inline edit on click of a table cell
+    $('#members-table').on( 'click', 'tbody td:not(:first-child)', function (e) {
+        editor.inline( this );
+    });
+
     var table = $('#members-table').DataTable({
         scrollY:        "500px",
         scrollX:        true,
@@ -56,7 +72,7 @@ $(function() {
         columns: [
             { data: 'fullname', name: 'fullname'},
             { data: 'amount', name: 'amount', class:"td-amount thousands"},
-            { data: 'total_paid', name: 'total_paid', class:"thousands"},
+            { data: 'total_paid', name: 'total_paid', class:"thousands total_deposit"},
             { data: '01/16', name: '01/16', class: 'text-center'},
             { data: '02/01', name: '02/01', class: 'text-center'},
             { data: '02/16', name: '02/16', class: 'text-center'},
@@ -86,18 +102,31 @@ $(function() {
             separateByThousands();
         },
         fixedColumns:   true,
+        select: {
+            style:    'os',
+            selector: 'td:first-child'
+        },
+        buttons: [
+            { extend: "create", editor: editor },
+            { extend: "edit",   editor: editor },
+            { extend: "remove", editor: editor }
+        ]
     });
-    $('#members-table').on('click', 'input', function(){
+
+    
+
+    $('#members-table1').on('click', 'input', function(){
         var checkbox = $(this);
         var row = checkbox.closest('tr');
-        var amount  = row.find('.td-amount').text();
         var month_day = checkbox.val();
         var options = {
-                        member_id: row.attr('id'), 
-                        amount: amount, 
+                        row_user_id: row.attr('id'), 
                         month_day: month_day,
                         remove: 0
                     };
+                    showOptionsMenu(checkbox);
+
+                    return;
         if($(this).is(':checked')){
             $.ajax({
                 url: '/update-member-payment',
@@ -105,6 +134,7 @@ $(function() {
                 data: options,
                 success: function(data){
                     set_message('success', 'Update done');
+                    row.children('.total_deposit').text(data.total_paid);
                 }
             });
         }else{
@@ -114,11 +144,31 @@ $(function() {
                 type: 'POST',
                 data: options,
                 success: function(data){
-
+                    set_message('success', 'Update done');
+                    row.children('.total_deposit').text(data.total_paid);
                 }
             });
         }
     });
 });
+
+function showOptionsMenu(button) {
+    // var songId = $(button).prevAll(".songId").val();
+    var menu = $(".optionsMenu");
+    var menuWidth = menu.width();
+    // menu.find(".songId").val(songId);
+
+    var scrollTop = $(window).scrollTop(); // Distance from top of window to top of document
+    var elementOffset = $(button).offset().top; // distance from top of document
+    var top = elementOffset -  scrollTop;
+
+    var top = elementOffset - scrollTop;
+    var left = $(button).offset().left;
+
+    menu.css({"top" : top + "px", "left" : left - menuWidth + "px", "display" : "inline"});
+console.log('click:' + "top"+ top + "px", "left" +( left - menuWidth) + "px");
+}
 </script>
+
 @endpush
+

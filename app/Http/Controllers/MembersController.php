@@ -6,9 +6,11 @@ use Illuminate\Support\Facades\Input;
 use App\Member;
 use App\Payment;
 use App\Loan;
+use App\User;
 use App\MemberPaymentDate;
 use App\PaymentDate;
 use App\ViewMember;
+use App\ViewUser;
 use Response;
 use Illuminate\Support\Facades\Auth;
 
@@ -137,7 +139,7 @@ class MembersController extends MyBaseController
         //
     }
 
-    public function updateMemberPayment() 
+    public function updateMemberPayment_old() 
     {
         $input = Input::all();
         $member_id = 0;
@@ -168,45 +170,46 @@ class MembersController extends MyBaseController
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
+     * Update payment of member once paid on certain date
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Member $member)
+    public function updateMemberPayment() 
     {
-        return Response::json($member);
+        $input = Input::all();
+        $user_id = 0;
+
+        if( !empty($input['row_user_id']) ) {
+            $exp = explode('_', $input['row_user_id']);
+            $user_id = sizeof($exp) > 1 ? $exp[1] : 0;
+        }
+        $user = User::find($user_id);
+       
+        $data['paymentable_id']     = $user_id;
+        $data['paymentable_type']   = 'App\Member';
+        $data['amount']             =    $user->amount;
+        $data['month_day']          = $input['month_day'];
+        
+        $condition = $data;
+        
+        if( $input['remove'] ) {
+            unset($condition['amount']);
+            Payment::whereArray($condition )->delete();
+            
+        }else {
+            Payment::updateOrCreate($condition, $data );
+        }
+
+        $total_paid = ViewUser::find($user_id)->total_paid;
+
+        $result = array('id' => $user_id, 'amount' => $data['amount'], 'total_paid' => $total_paid );
+
+        return Response::json($result);
+       
+
+
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        pr('test');
-    }
+   
 }

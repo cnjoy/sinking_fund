@@ -46,6 +46,7 @@ class DatatablesController extends Controller
                     ->toArray();
 
         $payment_date = PaymentDate::all()->pluck('month_day')->toArray();
+
         foreach($members as $x => $member )
         {
             foreach($payment_date as $pd)
@@ -59,7 +60,8 @@ class DatatablesController extends Controller
                     
                 }else{
                     if( Auth::user()->isAdmin() ) {
-                        $members[$x]->$pd = '<input type="checkbox" value="' . $pd . '"   />';
+                        // $members[$x]->$pd = '<input type="checkbox" value="' . $pd . '"   />';
+                         $members[$x]->$pd = '...';
                     }else {
                         $members[$x]->$pd = Auth::user()->id;
                     }

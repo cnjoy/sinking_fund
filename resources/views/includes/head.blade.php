@@ -12,8 +12,9 @@
 <link href="{{ asset('css/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" >
 <!-- Font Awesome -->
 <link href="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" >
-<link href="{{ asset('https://cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" >
-
+<link href="{{ asset('https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" >
+<link href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" >
+<link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" type="text/css" >
 <!-- Select2 -->
 <link href="{{ asset('js/select2/dist/css/select2.min.css') }}" rel="stylesheet" type="text/css" >
   <!-- Theme style -->
@@ -21,6 +22,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 <link href="{{ asset('css/AdminLTE.min.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('css/skins/_all-skins.min.css') }}" rel="stylesheet" type="text/css" >
+
+
+
 <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" >
 <link href="{{ asset('js/plugins/pnotify/pnotify.custom.min.css') }}" rel="stylesheet" type="text/css" >
 
